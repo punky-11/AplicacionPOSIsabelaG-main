@@ -1,0 +1,29 @@
+{
+  "name": "aplicacion-posisabelag",
+  "version": "1.0.0",
+  "description": "Taller aplicacion POST tienda virtual ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodeJs",
+    "Api",
+    "CRUD"
+  ],
+  "author": "Isabela Grisales Castrillon",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "env": "^0.0.2",
+    "express": "^4.18.2",
+    "mongoose": "^7.2.0",
+    "nodemon": "^2.0.22",
+    "router": "^1.3.8"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
