@@ -1,6 +1,7 @@
 const modelos = require('../modelos/esquemaUsuarios');
 const productos = require('../modelos/esquemaCatalogo');
 const vendedor = require('../modelos/esquemaVendedores');
+const nodemailer = require('nodemailer');
 
 //PAGINA PRINCIPAL LANDING
 exports.paginaprincipal = (req, res) => {
@@ -133,4 +134,35 @@ exports.ventas = (req, res) => {
 }
 
 //catalogo carrito
+
+exports.enviar = (req, res) => {
+const contenido = req.body.contenido;
+const asunto = req.body.asunto;
+const correo = req.body.correo;
+
+console.log(contenido)
+    console.log('entra')
+     var transporter = nodemailer.createTransport({
+       service: 'gmail',
+       auth: {
+         user: 'igrisales01@misena.edu.co',
+         pass: 'ltmnxypzhvkbzccn'
+       }
+     });
+
+     var mailOptions = {
+       from: 'igrisales01@misena.edu.co',
+       to: correo,
+       subject:asunto,
+       text: contenido
+     };
+
+     transporter.sendMail(mailOptions, function (error, info) {
+       if (error) {
+         console.log(error);
+       } else {
+         console.log('Email sent: ' + info.response);
+       }
+     });
+    }
 

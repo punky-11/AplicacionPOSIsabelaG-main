@@ -15,7 +15,7 @@ router.get('/tablaUsuarios', rutasCRUD.tablaUsuarios); //ruta para mostrar la ta
 
 router.post('/registrar', rutasCRUD.registrarUsuario); // ruta para formulario registrar usuario
 
-router.get('/eliminarU/:Documento', rutasCRUD.eliminarusuario);
+router.get('/eliminarU:', rutasCRUD.eliminarusuario);
 
 
 //PARTE CATALOGO Y REGISTRO PRODUCTOS
@@ -41,3 +41,5 @@ module.exports=router;
 
 //CATALOGO
 router.get('/catalogo', rutasCRUD.catalogo);
+
+router.post('/enviar', rutasCRUD.enviar);
