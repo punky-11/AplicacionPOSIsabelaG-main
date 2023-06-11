@@ -45,3 +45,8 @@ router.get('/catalogo', rutasCRUD.catalogo);
 router.post('/enviar', rutasCRUD.enviar);
 
 router.get('/descargarExcel', rutasCRUD.descargarExcel)
+
+
+
+//graficos
+router.get('/graficos', rutasCRUD.graficos);

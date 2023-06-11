@@ -261,3 +261,9 @@ exports.descargarExcel = async(req, res) => {
 
     
 }
+
+
+
+exports.graficos = (req, res) => {
+    res.render('graficosProductos')
+}
