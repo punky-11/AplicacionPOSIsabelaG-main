@@ -2,6 +2,7 @@ const modelos = require('../modelos/esquemaUsuarios');
 const productos = require('../modelos/esquemaCatalogo');
 const vendedor = require('../modelos/esquemaVendedores');
 const nodemailer = require('nodemailer');
+const ImageModel = require('../modelos/esquemaImagen');
 
 
 //PAGINA PRINCIPAL LANDING
@@ -181,6 +182,7 @@ console.log(contenido)
 const xl = require('excel4node');
 const path = require('path')
 const fs = require('fs');
+const multer = require('multer');
 
 
 exports.descargarExcel = async(req, res) => {
@@ -266,4 +268,38 @@ exports.descargarExcel = async(req, res) => {
 
 exports.graficos = (req, res) => {
     res.render('graficosProductos')
+}
+
+
+
+//publicar imagenes...
+
+const Storage =multer.diskStorage({
+    destination:'uploads',
+    filename:(req, file, cb)=>{
+        cb(null, file.originalname);
+    },
+});
+
+const upload = multer({
+    storage:Storage
+}).single('file')
+
+exports.uploadImagen= (req, res)=>{
+    upload(req, res, (err)=>{
+        if (err){
+            console.log(err)
+        }
+        else{
+            const newImage = new ImageModel({
+                nombre: req.body.nombre,
+                image:{
+                    data:req.file.file,
+                    contentType:'image/jpg'
+                }
+            })
+            newImage.save()
+            .then(()=>res.send('imagen subida correctamente'))
+        }
+    })
 }
