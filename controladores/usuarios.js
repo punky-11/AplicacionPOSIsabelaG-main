@@ -266,10 +266,20 @@ exports.descargarExcel = async(req, res) => {
 
 
 
-exports.graficos = (req, res) => {
-    res.render('graficosProductos')
-}
 
+
+exports.graficarProductos=async(req, res)=>{
+    const nombres =(await productos.find({}, {nombre:1,_id:0})).map(item => item.nombre);
+    console.table(nombres);
+
+    const stocks =(await productos.find({}, {stock:1,_id:0})).map(item => item.stock);
+    console.table(stocks);
+    res.render('graficosProductos',{
+        "nombres":nombres,
+        "stocks":stocks
+    })
+
+}
 
 
 //publicar imagenes...
