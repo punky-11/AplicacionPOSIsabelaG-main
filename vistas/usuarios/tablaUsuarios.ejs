@@ -16,7 +16,7 @@
 </style>
 
 <body>
-  <%-include('../parciales/navbar')%>
+  
 
 
     <div>
@@ -37,6 +37,9 @@
             <tbody>
                 <%usuarios.forEach(function(elemento){%>
                     <tr>
+                        <td>
+                            <%=elemento._id%>
+                        </td>
                         <td>
                             <%=elemento.nombreUsuario%>
                         </td>
@@ -59,12 +62,13 @@
                             <%=elemento.contraseñaUsuario%>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-outline-success" role="button" data-bs-toggle="modal"
+                            <a href="actualizarU/<%= elemento._id %>" class="btn btn-outline-success" role="button" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 Actualizar
                             </a>
 
-                            <a href="/eliminarU/:<%=elemento._id%>" class="btn btn-outline-danger" role="button">Eliminar</a>
+                            <a href="eliminarU/<%= elemento._id %>" class="btn btn-outline-danger"
+                                role="button">Eliminar</a>
 
 
                         </td>
@@ -83,7 +87,7 @@
                     <h1 class="modal-title fs-5" id="modaleliminarLabel">Verificación</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/eliminarM/:id" method="GET">
+                <form action="/eliminarU" method="GET">
 
                     <div class="modal-body">
                         
@@ -108,7 +112,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/editar/:id" method="POST">
+                    <form action="/actualizarU/:id" method="PUT">
                         <div class="form-group">
                             <label for="Nombre" class="form-label p-1">Nombre:</label>
                             <input type="text" class="form-control" id="Nombre" name="Nombre">
@@ -129,7 +133,8 @@
                             <input type="text" class="form-control" id="correo electronico" name="correo electronico">
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <a href="/actualizarU/:id" class="btn btn-outline-danger"
+                                    role="button">actualizar</a>
                             </div>
                         </div>
                     </form>

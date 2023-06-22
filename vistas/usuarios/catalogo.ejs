@@ -42,6 +42,7 @@
         <div class="card" style="width: 18rem;">
           <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
           <div class="card-body">
+            
             <h5 class="card-title">
               <%=producto.nombre%>
 
@@ -60,7 +61,7 @@
             data-bs-target="#exampleModal">
             ver producto
         </a>
-            <a href="#" onclick="carrito('<%=producto._id%>', '<%=producto.nombre%>')" class="btn btn-dark"><i
+            <a href="#" onclick="carrito('<%=producto._id%>', '<%=producto.nombre%>',)" class="btn btn-dark"><i
                 class="bi bi-cart-plus"></i></a>
 
             <input type="number" id="unidades">
@@ -74,11 +75,16 @@
 
     <script>
       function carrito(i, a) {
-        let carrito = document.getElementById('carritoContenido');
+        const carrito = document.getElementById('carritoContenido');
+        const carritoC= document.createElement('div') 
         const productos = document.createElement('p');
+        const nombre = document.createElement('p');
+
         productos.textContent = i;
-        productos.textContent = a;
-        carrito.appendChild(productos, productos);
+        nombre.textContent = a;
+        carritoC.append(productos, nombre)
+
+        carrito.appendChild(carritoC);
       }
     </script>
 

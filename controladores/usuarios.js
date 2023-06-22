@@ -106,23 +106,29 @@ exports.registrarUsuario = async (req, res) => {
 } //funcion para que los datos del ususario sean guardados en ka base de datos y luego los muestre en la respectiva tabla para verlos
 
 
-
 exports.eliminarusuario = async (req, res) => {
-    let documentoUsuario = req.params.Documento
-    await productos.findByIdAndDelete(documentoUsuario);
-    res.redirect('/')
-    console.log(eliminarusuario);
-    
-
-}
-
-/*exports.eliminarMascota = async (req, res) => {
     let id = req.params.id
-    await mascota.findByIdAndDelete({ "_id": id });
+    await modelos.findByIdAndDelete({ "_id": id });
 
-    res.redirect("/api/v1/mascotas")
+    res.redirect('/tienda/v1/tablaUsuarios')
+
+}//funcion para eliminar usuario 
+
+//actualizar usuario
+
+exports.actualizarusuario= async(req, res)=>{
+    const body =req.body
+    
+    let id = req.params.id
+    await modelos.updateOne({ "_id": id },     body,
+    (err, docs)=>{
+        res.send({
+            items:docs
+        })
+    });
+
 }
- */
+//--------------------------
 
 //--USUARIO INICIAR SESION--------------
 exports.iniciarsesion = (req, res) => {

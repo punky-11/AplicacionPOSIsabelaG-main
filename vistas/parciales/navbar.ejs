@@ -93,6 +93,55 @@
       </form>
     </div>
   </nav>
+    <!--aqui termina el navbar-->
+
+    <!-- Modal  Para iniciar sesion o registrase-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+
+            <div class="card m-5">
+              <h5 class="card-header">INICIAR SESION </h5>
+              <div class="card-body">
+                <form action="/login" method="POST">
+                  <div class="form-group">
+                    <label for="correo" class="form-label p-1">Número de celular o correo electronico:</label>
+                    <input type="text" class="form-control" id="correo" name="correo">
+
+                    <label for="contraseña" class="form-label p-1">contraseña:</label>
+                    <input type="password" class="form-control" id="contraseña" name="contraseña">
+
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-outline-dark p-1 mt-5">INGRESAR</button>
+                    <p>¿Has olvidado tu contraseña?</p>
+                  </div>
+
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-google"></i>Iniciar con
+                      Google</button>
+
+                    <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-facebook"></i>Iniciar
+                      con
+                      Facebook</button>
+                  </div>
+
+
+                </form>
+              </div>
+            </div>
+            <a class="btn btn-outline-dark" href="/tienda/v1/formulario" role="button"><i class="bi bi-person-circle">
+                Registrar</i></a> <br> <br>
+
+          </div>
+        </div>
+      </div>
+    </div>
 
 
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -102,10 +151,13 @@
     </div>
     <div class="offcanvas-body" id="carritoContenido">
      
+
+     
     </div>
   </div>
 
 
+    <script type="text/javascript" src="js/getFiles.js"></script>
 
   
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

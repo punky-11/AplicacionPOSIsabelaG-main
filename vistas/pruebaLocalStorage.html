@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javascript">
+function detectar(){
+				elapellido = localStorage.getItem("apellido");
+				if (elapellido == "null" || elapellido == null){
+					alert("Nadie ha estado aquí");
+					localStorage.setItem("apellido", "Perez");
+				}else{
+				}
+				alert("El Sr. " + elapellido + " ya ha estado aquí");					
+			}
+			
+			function limpiar(){
+				elapellido = localStorage.getItem("apellido");
+				if (elapellido != "null" & elapellido != null){
+				  alert("Limpiando " + elapellido )
+				  localStorage.removeItem("apellido");
+				}else{
+					alert("Nada que limpiar")
+				}
+			}
+</script>
+
+
+</head>
+
+<body onload="detectar()">
+<button onclick="limpiar()">Limpiar</button>
+		
+</body >
+<html>
