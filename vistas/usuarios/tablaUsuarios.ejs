@@ -62,10 +62,10 @@
                             <%=elemento.contraseñaUsuario%>
                         </td>
                         <td>
-                            <a href="actualizarU/<%= elemento._id %>" class="btn btn-outline-success" role="button" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <button class="btn btn-outline-success" role="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" onclick="rellenar(`<%=elemento._id%>`,`<%=elemento.nombreUsuario%>`, `<%=elemento.apellidoUsuario%>`,`<%=elemento.telefonoUsuario%>`,`<%=elemento.documentoUsuario%>`, `<%=elemento.ubicacionUsuario%>`,`<%=elemento.correoElectronicoUsuario%>`,)">
                                 Actualizar
-                            </a>
+                        </button>
 
                             <a href="eliminarU/<%= elemento._id %>" class="btn btn-outline-danger"
                                 role="button">Eliminar</a>
@@ -112,29 +112,33 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/actualizarU/:id" method="PUT">
+                    <form method="post" id="formularioActualizar">
                         <div class="form-group">
-                            <label for="Nombre" class="form-label p-1">Nombre:</label>
-                            <input type="text" class="form-control" id="Nombre" name="Nombre">
+                            <label for="idnuevo" class="form-label p-1">id:</label>
+                            <input type="text" class="form-control" id="idnuevo" name="idnuevo" disabled>
 
-                            <label for="Apellido" class="form-label p-1">Apellido:</label>
-                            <input type="text" class="form-control" id="Apellido" name="Apellido">
 
-                            <label for="telefono" class="form-label p-1">telefono:</label>
-                            <input type="number" class="form-control" id="telefono" name="telefono">
+                            <label for="Nombrenuevo" class="form-label p-1">Nombre:</label>
+                            <input type="text" class="form-control" id="Nombrenuevo" name="Nombrenuevo">
 
-                            <label for="documento" class="form-label p-1">documento:</label>
-                            <input type="number" class="form-control" id="documento" name="documento" disabled>
+                            <label for="Apellidonuevo" class="form-label p-1">Apellido:</label>
+                            <input type="text" class="form-control" id="Apellidonuevo" name="Apellidonuevo">
 
-                            <label for="ubicacion" class="form-label p-1">ubicacion:</label>
-                            <input type="text" class="form-control" id="ubicacion" name="ubicacion">
+                            <label for="telefononuevo" class="form-label p-1">telefono:</label>
+                            <input type="number" class="form-control" id="telefononuevo" name="telefononuevo">
 
-                            <label for="correo electronico" class="form-label p-1">correo electronico:</label>
-                            <input type="text" class="form-control" id="correo electronico" name="correo electronico">
+                            <label for="documentonuevo" class="form-label p-1">documento:</label>
+                            <input type="number" class="form-control" id="documentonuevo" name="documentonuevo" disabled>
+
+                            <label for="ubicacionnueva" class="form-label p-1">ubicacion:</label>
+                            <input type="text" class="form-control" id="ubicacionnueva" name="ubicacionnueva">
+
+                            <label for="correoEnuevo" class="form-label p-1">correo electronico:</label>
+                            <input type="text" class="form-control" id="correoEnuevo" name="correoEnuevo">
 
                             <div class="modal-footer">
-                                <a href="/actualizarU/:id" class="btn btn-outline-danger"
-                                    role="button">actualizar</a>
+                                <button  class="btn btn-outline-danger"
+                                    role="button">actualizar</button>
                             </div>
                         </div>
                     </form>
@@ -144,8 +148,18 @@
 
 
             <script>
-                function rellenar(a) {
-                    documentoUsuario.value = a
+                function rellenar(id, n,a,t,d,u,c) {
+                    idnuevo.value=id
+                    Nombrenuevo.value = n
+                    Apellidonuevo.value =a
+                    telefononuevo.value = t
+                    documentonuevo.value =d
+                    ubicacionnueva.value =u
+                    correoEnuevo.value =c
+                    
+                    const formulario = document.getElementById('formularioActualizar');
+                    formulario.setAttribute('action', 'actualizarusuario')
+                   
                 };
             </script>
 

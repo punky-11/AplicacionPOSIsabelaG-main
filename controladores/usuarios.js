@@ -117,15 +117,17 @@ exports.eliminarusuario = async (req, res) => {
 //actualizar usuario
 
 exports.actualizarusuario= async(req, res)=>{
-    const body =req.body
-    
-    let id = req.params.id
-    await modelos.updateOne({ "_id": id },     body,
-    (err, docs)=>{
-        res.send({
-            items:docs
-        })
-    });
+  await modelos.findByIdAndUpdate(req.body.idnuevo,{
+    nombreUsuario: req.body.nombrenuevo,
+    apellidoUsuario: req.body.Apellidonuevo,
+    telefonoUsuario: req.body.nombrenuevo,
+    documentoUsuario: req.body.documentonuevo,
+    ubicacionUsuario: req.body.ubicacionnueva,
+    correoElectronicoUsuario: req.body.correoEnuevo,
+  });
+
+  console.log(req.body)
+  res.redirect('/tienda/v1/tablaUsuarios')
 
 }
 //--------------------------

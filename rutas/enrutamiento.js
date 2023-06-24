@@ -16,7 +16,7 @@ router.get('/tablaUsuarios', rutasCRUD.tablaUsuarios); //ruta para mostrar la ta
 router.post('/registrar', rutasCRUD.registrarUsuario); // ruta para formulario registrar usuario
 
 router.get('/eliminarU/:id', rutasCRUD.eliminarusuario);
-router.put('/actualizarU/:id', rutasCRUD.actualizarusuario);
+router.post('/actualizarusuario', rutasCRUD.actualizarusuario);
 
 //PARTE CATALOGO Y REGISTRO PRODUCTOS
 router.get('/productos', rutasCRUD.paginaProductos);// ruta para mostrar el formulario y registrar un producto y al mismo tiempo muestra la tabla y todos los datos
