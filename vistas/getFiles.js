@@ -1,4 +1,3 @@
-const productos = require('../modelos/esquemaCatalogo');
 
 
 async function getData() {

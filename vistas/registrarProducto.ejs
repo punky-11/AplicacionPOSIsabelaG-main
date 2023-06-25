@@ -106,6 +106,7 @@
                 <%productos.forEach(function(elemento) { %>
 
                     <tr>
+                 
                         <td>
                             <%=elemento.referencia%>
                         </td>
@@ -134,13 +135,12 @@
 
                         </td>
                         <td>
-                            <a href="#" class="btn btn-outline-success" role="button" data-bs-toggle="modal"
+                            <a href="eliminarP/<%= elemento._id %>" class="btn btn-outline-success" role="button" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 Actualizar
                             </a>
 
-                            <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#modaleliminar" role="button">Eliminar</a>
+                            <a href="eliminarP/<%= elemento._id %>" class="btn btn-outline-danger" role="button">Eliminar</a>
 
 
                         </td>

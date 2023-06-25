@@ -32,6 +32,7 @@
             <tbody>
                 <%vendedores.forEach(function(elementoVendedor){%>  
                     <tr>
+                        
                         <td>
                             <%=elementoVendedor.nombreVendedor%>
                         </td>
@@ -44,13 +45,12 @@
                             <!--AQUI VAMOS A LLAMAR -->
                         </td>
                         <td>
-                            <a href="# class="btn btn-outline-success" role="button" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <a href="#" class="btn btn-outline-success" role="button"  data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"onclick="rellenar(`<%=elementoVendedor.nombreVendedor%>`,`<%=elementoVendedor.documentoVendedor%>`)"> 
                                 Actualizar
                             </a>
 
-                            <a href="#" class="btn btn-outline-danger"
-                                data-bs-toggle="modal" data-bs-target="#modaleliminar" role="button">Eliminar</a>
+                            <a href="eliminarV/<%= elementoVendedor._id %>" class="btn btn-outline-danger"role="button">Eliminar</a>
 
 
                         </td>
@@ -89,26 +89,25 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Mascota</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Vendedor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/editar/:id" method="POST">
+                    <form action="actualizarV" method="POST">
                         <div class="form-group">
-                            <label for="id" class="form-label p-1">ID:</label>
-                            <input type="text" class="form-control" id="idMascota" name="_id" disabled>
+                           
 
-                            <label for="nombreMascota" class="form-label p-1">NOMBRE:</label>
-                            <input type="text" class="form-control" id="nombreNuevoMascota" name="nombreNuevoMascota">
+                            <label for="nombrevendedorn" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="nombrevendedorn" name="nombrevendedorn">
 
-                            <label for="razaMascota" class="form-label p-1">RAZA:</label>
-                            <input type="text" class="form-control" id="razaNuevaMascota" name="razaNuevaMascota">
+                            <label for="documentov" class="form-label p-1">DOCUMENTO:</label>
+                            <input type="text" class="form-control" id="documentov" name="documentov">
 
-                            <label for="edadMascota" class="form-label p-1">EDAD:</label>
-                            <input type="text" class="form-control" id="edadNuevaMascota" name="edadNuevaMascota">
+                            <label for="ventasd" class="form-label p-1">Ventas despachadas</label>
+                            <input type="text" class="form-control" id="ventasd" name="ventasd">
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <input type="submit" class="btn btn-primary" value="Actualizar">
                             </div>
                         </div>
                     </form>
@@ -116,7 +115,12 @@
             </div>
 
 
-
+<script>
+    function rellenar(a,b ){
+        nombrevendedorn.value=a
+        documentov.value=b
+    }
+</script>
    
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

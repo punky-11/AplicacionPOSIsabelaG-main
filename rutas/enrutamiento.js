@@ -1,4 +1,5 @@
 const rutasCRUD = require('../controladores/usuarios');
+
 const express =require('express');
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get('/tablaUsuarios', rutasCRUD.tablaUsuarios); //ruta para mostrar la ta
 
 router.post('/registrar', rutasCRUD.registrarUsuario); // ruta para formulario registrar usuario
 
-router.get('/eliminarU/:id', rutasCRUD.eliminarusuario);
+router.get('/eliminarU/:id', rutasCRUD.eliminarusuario);//eliminar usuario
 router.post('/actualizarusuario', rutasCRUD.actualizarusuario);
 
 //PARTE CATALOGO Y REGISTRO PRODUCTOS
@@ -23,6 +24,7 @@ router.get('/productos', rutasCRUD.paginaProductos);// ruta para mostrar el form
 
 router.post('/registrarProducto', rutasCRUD.registrarProductos); //link para llamar a la funcion de registrar producto en el formulario y funcione
 
+router.get('/eliminarP/:id', rutasCRUD.eliminarproducto); //eliminar producto
 
 //PARTE DE VENDEDORES
 
@@ -31,7 +33,8 @@ router.get('/Vendedores', rutasCRUD.formularioVendedores); // ruta para formular
 router.get('/tablaVendedores', rutasCRUD.tablaVendedores); // ruta para ver la tabla de los vendedores y su registro de venta 
 
 router.post('/registrarVendedor', rutasCRUD.registrarVendedor);
-
+router.get('/eliminarV/:id', rutasCRUD.eliminarVendedor);//eliminar vendedor
+router.post('/actualizarV', rutasCRUD.actualizarVendedor);
 
 
 //PAGINA DE VENTAS

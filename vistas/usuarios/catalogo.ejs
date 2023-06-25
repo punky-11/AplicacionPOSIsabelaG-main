@@ -61,7 +61,7 @@
             data-bs-target="#exampleModal">
             ver producto
         </a>
-            <a href="#" onclick="carrito('<%=producto._id%>', '<%=producto.nombre%>',)" class="btn btn-dark"><i
+            <a href="#" onclick="mostrarProducto('<%=producto._id%>', '<%=producto.nombre%>',)" class="btn btn-dark"><i
                 class="bi bi-cart-plus"></i></a>
 
             <input type="number" id="unidades">
@@ -74,6 +74,29 @@
 
 
     <script>
+
+
+function mostrarProducto(json){
+ let catalogo=   document.getElementById('carritoContenido');
+json.forEach(element => {
+    catalogo.innerHTML+=
+    
+    `<div class="card">
+      <div class="card" style="width: 18rem;">
+          <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
+          <div class="card-body">
+        <div class="imgBx">
+            <img src="${element.nombre}">
+        </div>
+
+        <div class="contentBx">
+            <h2>price: ${element.precio}"</h2>
+        </div>
+    </div>`
+ 
+
+});}
+
       function carrito(i, a) {
         const carrito = document.getElementById('carritoContenido');
         const carritoC= document.createElement('div') 

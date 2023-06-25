@@ -1,4 +1,4 @@
-const modelos = require('../modelos/esquemaUsuarios');
+ const modelos = require('../modelos/esquemaUsuarios');
 const productos = require('../modelos/esquemaCatalogo');
 const vendedor = require('../modelos/esquemaVendedores');
 const nodemailer = require('nodemailer');
@@ -36,7 +36,25 @@ exports.registrarVendedor = (req, res) => {
     nuevoVendedor.save();
     res.redirect('/tienda/v1/tablaVendedores')
 }
+//eliminar vendedor
 
+exports.eliminarVendedor = async (req, res) => {
+    let id = req.params.id
+    await vendedor.findByIdAndDelete({ "_id": id });
+    res.redirect('/tienda/v1/tablaVendedores')
+
+
+}
+
+exports.actualizarVendedor = async (req, res) =>{
+    let id= {_id: req.body.idn}
+    let actu={nombreVendedor: req.body.nombrevendedorn,
+        documentoVendedor: req.body.documentov}
+        await vendedor.findOneAndUpdate(id, actu);
+        res.redirect('/tienda/v1/tablaVendedores')
+
+        console.log(actu)
+}
 
 //-PRODUCTOS----------------------------------------------
 
@@ -49,7 +67,13 @@ exports.paginaProductos = async (req, res) => {
 
 } // pagina donde se muestra el formulario para registrar y tambien muestra el catalogo
 
+exports.eliminarproducto = async (req, res) => {
+    let id = req.params.id
+    await productos.findByIdAndDelete({ "_id": id });
 
+    res.redirect('/tienda/v1/productos')
+
+}//funcion para eliminar producto 
 
 exports.registrarProductos = (req, res) => {
     const registrarProducto = new productos({
@@ -116,20 +140,37 @@ exports.eliminarusuario = async (req, res) => {
 
 //actualizar usuario
 
-exports.actualizarusuario= async(req, res)=>{
-  await modelos.findByIdAndUpdate(req.body.idnuevo,{
-    nombreUsuario: req.body.nombrenuevo,
-    apellidoUsuario: req.body.Apellidonuevo,
-    telefonoUsuario: req.body.nombrenuevo,
-    documentoUsuario: req.body.documentonuevo,
-    ubicacionUsuario: req.body.ubicacionnueva,
-    correoElectronicoUsuario: req.body.correoEnuevo,
-  });
+//   exports.actualizarusuario= async(req, res)=>{
+//     await modelos.findByIdAndUpdate(req.params._id,{
+//       nombreUsuario: req.body.nombreUsuario,
+//       apellidoUsuario: req.body.apellidoUsuario,
+//       telefonoUsuario: req.body.telefonoUsuario,
+//       documentoUsuario: req.body.documentoUsuario,
+//       ubicacionUsuario: req.body.ubicacionUsuario,
+//      correoElectronicoUsuario: req.body.correoElectronicoUsuario,
+//     });
 
-  console.log(req.body)
-  res.redirect('/tienda/v1/tablaUsuarios')
+//     console.log(req.body)
+//     res.redirect('/tienda/v1/tablaUsuarios')
 
-}
+//   }
+
+  exports.actualizarusuario = async (req, res) => {
+    console.log(req.body.idnuevo )
+      const id = { _id: req.body.idnuevo };
+      const actu = {
+         nombreUsuario: req.body.nombreUsuario,
+          apellidoUsuario: req.body.apellidoUsuario,
+          telefonoUsuario: req.body.telefonoUsuario,
+          documentoUsuario: req.body.documentoUsuario,
+          ubicacionUsuario: req.body.ubicacionUsuario,
+          correoElectronicoUsuario: req.body.correoElectronicoUsuario,
+     }
+     console.log(actu)
+     await modelos.findOneAndUpdate(id, actu)
+     res.redirect('/tienda/v1/tablaUsuarios')
+    
+ }
 //--------------------------
 
 //--USUARIO INICIAR SESION--------------
@@ -152,38 +193,38 @@ exports.ventas = (req, res) => {
 //ENVIAR CORREO DE MANERA SPAM
 
 exports.enviar = (req, res) => {
-const contenido = req.body.contenido;
-const asunto = req.body.asunto;
-const correo = req.body.correo;
+    const contenido = req.body.contenido;
+    const asunto = req.body.asunto;
+    const correo = req.body.correo;
 
-console.log(contenido)
+    console.log(contenido)
     console.log('entra')
-     var transporter = nodemailer.createTransport({
-       service: 'gmail',
-       auth: {
-         user: 'igrisales01@misena.edu.co',
-         pass: 'ltmnxypzhvkbzccn'
-       }
-     });
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'igrisales01@misena.edu.co',
+            pass: 'ltmnxypzhvkbzccn'
+        }
+    });
 
-     var mailOptions = {
-       from: 'igrisales01@misena.edu.co',
-       to: correo,
-       subject:asunto,
-       text: contenido
-     };
+    var mailOptions = {
+        from: 'igrisales01@misena.edu.co',
+        to: correo,
+        subject: asunto,
+        text: contenido
+    };
 
-     transporter.sendMail(mailOptions, function (error, info) {
-       if (error) {
-         console.log(error);
-       } else {
-         console.log('Email sent: ' + info.response);
-       }
-     });
-    }
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
 
 
-    // GENERAR TABLA EXCEL DE LOS DATOS SOBRE LOS PRODUCTOS ----------------------------------------
+// GENERAR TABLA EXCEL DE LOS DATOS SOBRE LOS PRODUCTOS ----------------------------------------
 
 
 
@@ -193,7 +234,7 @@ const fs = require('fs');
 const multer = require('multer');
 
 
-exports.descargarExcel = async(req, res) => {
+exports.descargarExcel = async (req, res) => {
     //configuramos el excel4node
 
     //creamos un nuevo documento
@@ -234,57 +275,57 @@ exports.descargarExcel = async(req, res) => {
     let fila = 2;
 
     //agregamos el contenido de la base de datos con un for o un forEach para llamar todos los datos 
-    
+
     listaProductos.forEach(datoProducto => {
-    ws.cell(fila, 1).string(datoProducto.referencia).style(contenidoEstilo);
-    ws.cell(fila, 2).string(datoProducto.nombre).style(contenidoEstilo);
-    ws.cell(fila, 3).string(datoProducto.descripcion).style(contenidoEstilo);
-    ws.cell(fila, 4).number(datoProducto.precio).style(contenidoEstilo);
-    
-    fila = fila +1;
+        ws.cell(fila, 1).string(datoProducto.referencia).style(contenidoEstilo);
+        ws.cell(fila, 2).string(datoProducto.nombre).style(contenidoEstilo);
+        ws.cell(fila, 3).string(datoProducto.descripcion).style(contenidoEstilo);
+        ws.cell(fila, 4).number(datoProducto.precio).style(contenidoEstilo);
+
+        fila = fila + 1;
     });
 
-    const rutaExcel = path.join(__dirname,'excel'+ nombreArchivo +'.xlsx');
+    const rutaExcel = path.join(__dirname, 'excel' + nombreArchivo + '.xlsx');
 
     //escribir y guardar en el documento 
     //se le inclulle la ruta y una funcion 
-    wb.write(rutaExcel, function(err,stars){
+    wb.write(rutaExcel, function (err, stars) {
 
         //capturamos y mostramos en caso de un error
-        if(err)console.log(err);
+        if (err) console.log(err);
         //creamos una funcion que descargue el archibo y lo elimine 
-        else{
+        else {
 
             //guardamos el documento en la carpeta para excel para poder descargarla en el pc
-                res.download(rutaExcel);
-                
-                console.log('documento descargado correctamente');
+            res.download(rutaExcel);
 
-                //Eliminamos el documento de la carpeta excel
-                fs.rm(rutaExcel, function(err){
-                    if(err)console.log(err);
-                    else console.log('Archivo descargado y borrado del servidor correctamente');
-                });
-                
+            console.log('documento descargado correctamente');
+
+            //Eliminamos el documento de la carpeta excel
+            fs.rm(rutaExcel, function (err) {
+                if (err) console.log(err);
+                else console.log('Archivo descargado y borrado del servidor correctamente');
+            });
+
         }
     });
 
-    
+
 }
 
 
 
 
 
-exports.graficarProductos=async(req, res)=>{
-    const nombres =(await productos.find({}, {nombre:1,_id:0})).map(item => item.nombre);
+exports.graficarProductos = async (req, res) => {
+    const nombres = (await productos.find({}, { nombre: 1, _id: 0 })).map(item => item.nombre);
     console.table(nombres);
 
-    const stocks =(await productos.find({}, {stock:1,_id:0})).map(item => item.stock);
+    const stocks = (await productos.find({}, { stock: 1, _id: 0 })).map(item => item.stock);
     console.table(stocks);
-    res.render('graficosProductos',{
-        "nombres":nombres,
-        "stocks":stocks
+    res.render('graficosProductos', {
+        "nombres": nombres,
+        "stocks": stocks
     })
 
 }
@@ -292,32 +333,32 @@ exports.graficarProductos=async(req, res)=>{
 
 //publicar imagenes...
 
-const Storage =multer.diskStorage({
-    destination:'uploads',
-    filename:(req, file, cb)=>{
+const Storage = multer.diskStorage({
+    destination: 'uploads',
+    filename: (req, file, cb) => {
         cb(null, file.originalname);
     },
 });
 
 const upload = multer({
-    storage:Storage
+    storage: Storage
 }).single('file')
 
-exports.uploadImagen= (req, res)=>{
-    upload(req, res, (err)=>{
-        if (err){
+exports.uploadImagen = (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
             console.log(err)
         }
-        else{
+        else {
             const newImage = new ImageModel({
                 nombre: req.body.nombre,
-                image:{
-                    data:req.file.file,
-                    contentType:'image/jpg'
+                image: {
+                    data: req.file.file,
+                    contentType: 'image/jpg'
                 }
             })
             newImage.save()
-            .then(()=>res.send('imagen subida correctamente'))
+                .then(() => res.send('imagen subida correctamente'))
         }
     })
 }
