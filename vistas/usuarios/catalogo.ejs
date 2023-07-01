@@ -33,6 +33,11 @@
     .card img {
       height: 300px;
     }
+    #opciones{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
   </style>
 </head>
 
@@ -63,8 +68,8 @@
             data-bs-target="#exampleModal">
             ver producto
         </a>
-            <a href="#" onclick="mostrarProducto('<%=producto._id%>', '<%=producto.nombre%>',)" class="btn btn-dark"><i
-                class="bi bi-cart-plus"></i></a>
+            <button onclick="agregrarProducto('<%=producto._id%>', '<%=producto.nombre%>','<%=producto.precio%>')" class="btn btn-dark"><i
+                class="bi bi-cart-plus"></i></button>
 
             <input type="number" id="unidades">
           </div>
@@ -75,42 +80,89 @@
     </main>
 
 
-    <script>
+    <script type="text/javascript"> // indicarle al navegador qué lenguaje era el que usaba el script.
 
+      var carroCompras = JSON.parse(localStorage.getItem('carroCompras'))|| []; //estamos buscando un arreglo yque es lo que esta guardado en el local store si no hay algo le decimos que si no esta lo cree
 
-function mostrarProducto(json){
- let catalogo=   document.getElementById('carritoContenido');
-json.forEach(element => {
-    catalogo.innerHTML+=
-    
-    `<div class="card">
-      <div class="card" style="width: 18rem;">
-          <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
-          <div class="card-body">
-        <div class="imgBx">
-            <img src="${element.nombre}">
-        </div>
-
-        <div class="contentBx">
-            <h2>price: ${element.precio}"</h2>
-        </div>
-    </div>`
- 
-
-});}
-
-      function carrito(i, a) {
-        const carrito = document.getElementById('carritoContenido');
-        const carritoC= document.createElement('div') 
-        const productos = document.createElement('p');
-        const nombre = document.createElement('p');
-
-        productos.textContent = i;
-        nombre.textContent = a;
-        carritoC.append(productos, nombre)
-
-        carrito.appendChild(carritoC);
+      function  agregrarProducto(id, nombre, precio){
+        // estamos creando una funcion y la convertimos en un arreglo 
+        const producto={'id': id,
+        'nombre': nombre, 
+         'precio': precio};
+        carroCompras.push(producto);// aqui le indicamos que a carro compras le vamos a agregar los atributos de productos y esto quedaria como un clave valor
+        localStorage.setItem('carroCompras', JSON.stringify(carroCompras));// se convierte en string y se almacena
+        console.log(carroCompras)
+      
       }
+
+
+ function mostrarProducto(){
+
+  carroCompras.forEach(elementoP => {
+    const div = document.getElementById('carritoContenido');
+
+    div.innerHTML+=
+    `<div class="card mb-3" style="max-width:400px;"  style="max-height:400px;">
+  <div class="row g-0">
+    <div class="col-md-4" style="max-height:50%;" >
+      <img src="https://picsum.photos/200/200" class="img-fluid rounded-start" alt="producto" style="max-height:50%;" >
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${elementoP.nombre}</h5>
+        <p class="card-text">${elementoP.precio}</p>
+
+        <div id="opciones">
+        <input type="number" class="form-control" value="1"  style="max-width:40%;">
+        <button type="button" id="eliminarp"class="btn btn-danger"  "><i class="bi bi-cart-x"></i></button>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>`
+
+
+
+const total = carroCompras.reduce((acumulador, el)=> acumulador + parseFloat(el.precio), 0).tofixed(2);
+ 
+ const preciototal = document.createElement('div');
+ preciototal.className="totalC";
+ preciototal.innerHTML=`total a pagar:$ ${total}</p>`
+ carroCompras.append(preciototal);
+    
+  });
+
+ }
+
+//boton= document.getElementById('eliminarp').addEventListener("click", eliminarProductoC());
+
+// eliminar producto carrito 
+
+function eliminarProductoC(){
+  //metodo find para buscar el id del producto para eliminar
+  const foundId = carroCompras.find((elementoP) => elementoP.id);
+
+  carroCompras = carroCompras.filter((carritoId)=>{ //busco dentro del carrito y le pido que me busque todo los productos que sean diferentes al id de la linea 133 que es el producto que se desea eliminar 
+    return carritoId !== foundId;
+  })
+  mostrarProducto();
+
+
+  function limpiar(){
+				elproducto = localStorage.getItem(elementoP.id);
+				if (elproducto != "null" & elproducto != null){
+				  alert("Limpiando " + elproducto )
+				  localStorage.removeItem(elementoP.id);
+				}else{
+					alert("Nada que limpiar")
+				}
+			}
+
+
+}
+
+
     </script>
 
 
