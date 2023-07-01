@@ -53,3 +53,7 @@ router.get('/descargarExcel', rutasCRUD.descargarExcel)
 router.post('/uploads', rutasCRUD.uploadImagen)
 //graficos
 router.get('/graficos', rutasCRUD.graficarProductos);
+
+
+//OTROS
+router.get('/otros', rutasCRUD.otros);

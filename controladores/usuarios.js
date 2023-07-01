@@ -185,6 +185,11 @@ exports.ventas = (req, res) => {
 }
 
 
+//----OTROS-----------
+
+exports.otros=(req,res)=>{
+    res.render('otros')
+}
 
 
 

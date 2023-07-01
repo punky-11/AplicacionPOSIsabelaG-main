@@ -8,7 +8,7 @@ const multer =require('multer');
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true})); // se necesita para que analice los req entrantes es decir las peticiones 
-app.use(express.static('./estaticas'))
+app.use('/estaticas', express.static('estaticas'))
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'vistas'));
 
