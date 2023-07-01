@@ -47,7 +47,7 @@
       <%catalogo.forEach(function(producto){%>
 
         <div class="card" style="width: 18rem;">
-          <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
+          <img src="https://source.unsplash.com/1600x900/?moda" class="card-img-top" alt="...">
           <div class="card-body">
             
             <h5 class="card-title">
@@ -75,7 +75,7 @@
           </div>
         </div>
         <%})%>
-
+        
 
     </main>
 
@@ -86,50 +86,86 @@
 
       function  agregrarProducto(id, nombre, precio){
         // estamos creando una funcion y la convertimos en un arreglo 
-        const producto={'id': id,
+        carroCompras.push({'id': id,
         'nombre': nombre, 
-         'precio': precio};
-        carroCompras.push(producto);// aqui le indicamos que a carro compras le vamos a agregar los atributos de productos y esto quedaria como un clave valor
+         'precio': precio});
+       // carroCompras.push(producto);// aqui le indicamos que a carro compras le vamos a agregar los atributos de productos y esto quedaria como un clave valor
         localStorage.setItem('carroCompras', JSON.stringify(carroCompras));// se convierte en string y se almacena
         console.log(carroCompras)
       
       }
 
+      const div = document.getElementById('carritoContenido');
 
  function mostrarProducto(){
-
+  div.innerHTML = ''
   carroCompras.forEach(elementoP => {
-    const div = document.getElementById('carritoContenido');
-
-    div.innerHTML+=
-    `<div class="card mb-3" style="max-width:400px;"  style="max-height:400px;">
-  <div class="row g-0">
-    <div class="col-md-4" style="max-height:50%;" >
-      <img src="https://picsum.photos/200/200" class="img-fluid rounded-start" alt="producto" style="max-height:50%;" >
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${elementoP.nombre}</h5>
-        <p class="card-text">${elementoP.precio}</p>
-
-        <div id="opciones">
-        <input type="number" class="form-control" value="1"  style="max-width:40%;">
-        <button type="button" id="eliminarp"class="btn btn-danger"  "><i class="bi bi-cart-x"></i></button>
-          </div>
-
-      </div>
-    </div>
-  </div>
-</div>`
 
 
+    const detalles = document.createElement('div');
+    detalles.innerHTML = `
+        <div class="d-flex justify-content-between">
+            <div class="w-50">
+              <img src="https://source.unsplash.com/1600x900/?moda" alt=""  class="img-fluid rounded-start" alt="producto">
+            </div>
+            <div>
+              <p>${elementoP.nombre}</p>
+              <p>${elementoP.precio}</p>
+            </div>
+        </div>
+    
 
-const total = carroCompras.reduce((acumulador, el)=> acumulador + parseFloat(el.precio), 0).tofixed(2);
+    `
+    div.appendChild(detalles);
+    //     <div class="card mb-3" style="max-width:400px;"  style="max-height:400px;">
+//   <div class="row g-0">
+//     <div class="col-md-4" style="max-height:50%;" >
+//       <img src="https://source.unsplash.com/1600x900/?moda" class="img-fluid rounded-start" alt="producto" style="max-height:50%;" >
+//     </div>
+//     <div class="col-md-8">
+//       <div class="card-body">
+//         <h5 class="card-title">${elementoP.nombre}</h5>
+//         <p class="card-text">${elementoP.precio}</p>
+
+//         <div id="opciones">
+//         <input type="number" class="form-control" value="1"  style="max-width:40%;">
+//         <button type="button" id="eliminarp"class="btn btn-danger"  "><i class="bi bi-cart-x"></i></button>
+//           </div>
+
+//       </div>
+//     </div>
+//   </div>
+// </div>
+    
+//     `<div class="card mb-3" style="max-width:400px;"  style="max-height:400px;">
+//   <div class="row g-0">
+//     <div class="col-md-4" style="max-height:50%;" >
+//       <img src="https://source.unsplash.com/1600x900/?moda" class="img-fluid rounded-start" alt="producto" style="max-height:50%;" >
+//     </div>
+//     <div class="col-md-8">
+//       <div class="card-body">
+//         <h5 class="card-title">${elementoP.nombre}</h5>
+//         <p class="card-text">${elementoP.precio}</p>
+
+//         <div id="opciones">
+//         <input type="number" class="form-control" value="1"  style="max-width:40%;">
+//         <button type="button" id="eliminarp"class="btn btn-danger"  "><i class="bi bi-cart-x"></i></button>
+//           </div>
+
+//       </div>
+//     </div>
+//   </div>
+// </div>`
+
+
+
+//CAMBIAR DE LADO QUITE ESO DE AQUI
+// const total = carroCompras.reduce((acumulador, el)=> acumulador + parseFloat(el.precio), 0).tofixed(2);
  
- const preciototal = document.createElement('div');
- preciototal.className="totalC";
- preciototal.innerHTML=`total a pagar:$ ${total}</p>`
- carroCompras.append(preciototal);
+//  const preciototal = document.createElement('div');
+//  preciototal.className="totalC";
+//  preciototal.innerHTML=`total a pagar:$ ${total}</p>`
+//  carroCompras.append(preciototal);
     
   });
 
