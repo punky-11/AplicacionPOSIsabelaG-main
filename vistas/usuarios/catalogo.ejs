@@ -33,7 +33,8 @@
     .card img {
       height: 300px;
     }
-    #opciones{
+
+    #opciones {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -49,7 +50,7 @@
         <div class="card" style="width: 18rem;">
           <img src="https://source.unsplash.com/1600x900/?moda" class="card-img-top" alt="...">
           <div class="card-body">
-            
+
             <h5 class="card-title">
               <%=producto.nombre%>
 
@@ -65,45 +66,53 @@
             </p>
 
             <a href="#" class="btn btn-outline-success" role="button" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">
-            ver producto
-        </a>
-            <button onclick="agregrarProducto('<%=producto._id%>', '<%=producto.nombre%>','<%=producto.precio%>')" class="btn btn-dark"><i
-                class="bi bi-cart-plus"></i></button>
+              data-bs-target="#exampleModal">
+              ver producto
+            </a>
+            <button onclick="agregrarProducto('<%=producto._id%>', '<%=producto.nombre%>','<%=producto.precio%>')"
+              class="btn btn-dark"><i class="bi bi-cart-plus"></i></button>
 
             <input type="number" id="unidades">
           </div>
         </div>
         <%})%>
-        
+
 
     </main>
 
 
-    <script type="text/javascript"> // indicarle al navegador qué lenguaje era el que usaba el script.
+    <script> // indicarle al navegador qué lenguaje era el que usaba el script.
 
-      var carroCompras = JSON.parse(localStorage.getItem('carroCompras'))|| []; //estamos buscando un arreglo yque es lo que esta guardado en el local store si no hay algo le decimos que si no esta lo cree
+      var carroCompras = JSON.parse(localStorage.getItem('carroCompras')) || []; //estamos buscando un arreglo yque es lo que esta guardado en el local store si no hay algo le decimos que si no esta lo cree
 
-      function  agregrarProducto(id, nombre, precio){
+      function agregrarProducto(id, nombre, precio) {
         // estamos creando una funcion y la convertimos en un arreglo 
-        carroCompras.push({'id': id,
-        'nombre': nombre, 
-         'precio': precio});
-       // carroCompras.push(producto);// aqui le indicamos que a carro compras le vamos a agregar los atributos de productos y esto quedaria como un clave valor
-        localStorage.setItem('carroCompras', JSON.stringify(carroCompras));// se convierte en string y se almacena
+        carroCompras.push({
+          'id': id,
+          'nombre': nombre,
+          'precio': precio
+        });
+        // carroCompras.push(producto);// aqui le indicamos que a carro compras le vamos a agregar los atributos de productos y esto quedaria como un clave valor
         console.log(carroCompras)
-      
+
+        cookies();
+
       }
+
+      function cookies() {
+        localStorage.setItem('carroCompras', JSON.stringify(carroCompras));// se convierte en string y se almacena
+      }
+
 
       const div = document.getElementById('carritoContenido');
 
- function mostrarProducto(){
-  div.innerHTML = ''
-  carroCompras.forEach(elementoP => {
+      function mostrarProducto() {
+        div.innerHTML = ''
+        carroCompras.forEach(elementoP => {
 
 
-    const detalles = document.createElement('div');
-    detalles.innerHTML = `
+          const detalles = document.createElement('div');
+          detalles.innerHTML = `
         <div class="d-flex justify-content-between">
             <div class="w-50">
               <img src="https://source.unsplash.com/1600x900/?moda" alt=""  class="img-fluid rounded-start" alt="producto">
@@ -111,94 +120,52 @@
             <div>
               <p>${elementoP.nombre}</p>
               <p>${elementoP.precio}</p>
+              <div id="opciones">
+         <input type="number" class="form-control" value="1"  style="max-width:40%;">
+           </div>
             </div>
+
         </div>
     
 
     `
-    div.appendChild(detalles);
-    //     <div class="card mb-3" style="max-width:400px;"  style="max-height:400px;">
-//   <div class="row g-0">
-//     <div class="col-md-4" style="max-height:50%;" >
-//       <img src="https://source.unsplash.com/1600x900/?moda" class="img-fluid rounded-start" alt="producto" style="max-height:50%;" >
-//     </div>
-//     <div class="col-md-8">
-//       <div class="card-body">
-//         <h5 class="card-title">${elementoP.nombre}</h5>
-//         <p class="card-text">${elementoP.precio}</p>
+          div.appendChild(detalles);
 
-//         <div id="opciones">
-//         <input type="number" class="form-control" value="1"  style="max-width:40%;">
-//         <button type="button" id="eliminarp"class="btn btn-danger"  "><i class="bi bi-cart-x"></i></button>
-//           </div>
-
-//       </div>
-//     </div>
-//   </div>
-// </div>
-    
-//     `<div class="card mb-3" style="max-width:400px;"  style="max-height:400px;">
-//   <div class="row g-0">
-//     <div class="col-md-4" style="max-height:50%;" >
-//       <img src="https://source.unsplash.com/1600x900/?moda" class="img-fluid rounded-start" alt="producto" style="max-height:50%;" >
-//     </div>
-//     <div class="col-md-8">
-//       <div class="card-body">
-//         <h5 class="card-title">${elementoP.nombre}</h5>
-//         <p class="card-text">${elementoP.precio}</p>
-
-//         <div id="opciones">
-//         <input type="number" class="form-control" value="1"  style="max-width:40%;">
-//         <button type="button" id="eliminarp"class="btn btn-danger"  "><i class="bi bi-cart-x"></i></button>
-//           </div>
-
-//       </div>
-//     </div>
-//   </div>
-// </div>`
+          let eliminar = document.createElement('button');
+          eliminar.innerText = '❌';
+          eliminar.className = "eliminar-producto";
+          detalles.appendChild(eliminar);
+          eliminar.addEventListener("click", eliminarProductoC);
 
 
+        });
 
-//CAMBIAR DE LADO QUITE ESO DE AQUI
-// const total = carroCompras.reduce((acumulador, el)=> acumulador + parseFloat(el.precio), 0).tofixed(2);
- 
-//  const preciototal = document.createElement('div');
-//  preciototal.className="totalC";
-//  preciototal.innerHTML=`total a pagar:$ ${total}</p>`
-//  carroCompras.append(preciototal);
-    
-  });
-
- }
-
-//boton= document.getElementById('eliminarp').addEventListener("click", eliminarProductoC());
-
-// eliminar producto carrito 
-
-function eliminarProductoC(){
-  //metodo find para buscar el id del producto para eliminar
-  const foundId = carroCompras.find((elementoP) => elementoP.id);
-
-  carroCompras = carroCompras.filter((carritoId)=>{ //busco dentro del carrito y le pido que me busque todo los productos que sean diferentes al id de la linea 133 que es el producto que se desea eliminar 
-    return carritoId !== foundId;
-  })
-  mostrarProducto();
+      }
 
 
-  function limpiar(){
-				elproducto = localStorage.getItem(elementoP.id);
-				if (elproducto != "null" & elproducto != null){
-				  alert("Limpiando " + elproducto )
-				  localStorage.removeItem(elementoP.id);
-				}else{
-					alert("Nada que limpiar")
-				}
-			}
+      //CAMBIAR DE LADO QUITE ESO DE AQUI
+      // const total = carroCompras.reduce((acumulador, el)=> acumulador + parseFloat(el.precio), 0).tofixed(2);
 
+      //  const preciototal = document.createElement('div');
+      //  preciototal.className="totalC";
+      //  preciototal.innerHTML=`total a pagar:$ ${total}</p>`
+      //  carroCompras.append(preciototal);
 
-}
+      //boton= document.getElementById('eliminarp').addEventListener("click", eliminarProductoC());
 
+      // eliminar producto carrito 
 
+      function eliminarProductoC() {
+        //metodo find para buscar el id del producto para eliminar
+        const foundId = carroCompras.find((elementoP) => elementoP.id);
+        console.log(foundId)
+
+        carroCompras = carroCompras.filter((carritoId) => { //busco dentro del carrito y le pido que me busque todo los productos que sean diferentes al id de la linea 133 que es el producto que se desea eliminar 
+          return carritoId !== foundId;
+        })
+        mostrarProducto();
+        cookies();
+      }
     </script>
 
 
