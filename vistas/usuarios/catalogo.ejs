@@ -81,7 +81,7 @@
     </main>
 
 
-    <script> // indicarle al navegador qué lenguaje era el que usaba el script.
+    <script>
 
       var carroCompras = JSON.parse(localStorage.getItem('carroCompras')) || []; //estamos buscando un arreglo yque es lo que esta guardado en el local store si no hay algo le decimos que si no esta lo cree
 
@@ -120,8 +120,11 @@
             <div>
               <p>${elementoP.nombre}</p>
               <p>${elementoP.precio}</p>
-              <div id="opciones">
-         <input type="number" class="form-control" value="1"  style="max-width:40%;">
+              <div id="opciones" class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-dash"></i></button>
+         <input type="text" class="form-control" value="1"  style="width:50px;">
+         <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-dash"></i></button>
+
            </div>
             </div>
 
@@ -131,29 +134,21 @@
     `
           div.appendChild(detalles);
 
-          let eliminar = document.createElement('button');
-          eliminar.innerText = '❌';
-          eliminar.className = "eliminar-producto";
+          let eliminar = document.createElement('i');
+          eliminar.className = "bi bi-trash-fill";
           detalles.appendChild(eliminar);
           eliminar.addEventListener("click", eliminarProductoC);
 
 
         });
+        const total =carroCompras.reduce((acc, el) => acc + parseFloat(el.precio), 0).toFixed(2);
+          const totalF= document.createElement("div");
+          totalF.className="total-content";
+          totalF.innerHTML=`total a pagar $: ${total}`;
+          div.appendChild(totalF);
+
 
       }
-
-
-      //CAMBIAR DE LADO QUITE ESO DE AQUI
-      // const total = carroCompras.reduce((acumulador, el)=> acumulador + parseFloat(el.precio), 0).tofixed(2);
-
-      //  const preciototal = document.createElement('div');
-      //  preciototal.className="totalC";
-      //  preciototal.innerHTML=`total a pagar:$ ${total}</p>`
-      //  carroCompras.append(preciototal);
-
-      //boton= document.getElementById('eliminarp').addEventListener("click", eliminarProductoC());
-
-      // eliminar producto carrito 
 
       function eliminarProductoC() {
         //metodo find para buscar el id del producto para eliminar
@@ -164,7 +159,7 @@
           return carritoId !== foundId;
         })
         mostrarProducto();
-        cookies();
+        cookies();//elimina el producto de las cookies tambien
       }
     </script>
 
