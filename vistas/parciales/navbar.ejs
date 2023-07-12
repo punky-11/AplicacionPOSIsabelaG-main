@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <!--lINK CSS DE BOOSTRAP-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -14,9 +15,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
   <script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
+
 <body>
-    
- 
+
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-ligthstatic-top">
     <div class="container">
@@ -37,20 +39,22 @@
                 class="bi bi-person-circle"></i>
             </button>
 
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"   onclick="mostrarProducto()" ><i
-             class="bi bi-cart"></i>
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="mostrarProducto()"><i
+                class="bi bi-cart"></i>
             </button>
 
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#"><i
                 class="bi bi-headset"></i>
             </button>
-
           </div>
         </ul>
       </div>
     </div>
   </nav>
   <!--otro nav-->
+
+
 
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
@@ -86,55 +90,55 @@
       </form>
     </div>
   </nav>
-    <!--aqui termina el navbar-->
+  <!--aqui termina el navbar-->
 
-    <!-- Modal  Para iniciar sesion o registrase-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-
-            <div class="card m-5">
-              <h5 class="card-header">INICIAR SESION </h5>
-              <div class="card-body">
-                <form action="/login" method="POST">
-                  <div class="form-group">
-                    <label for="correo" class="form-label p-1">Número de celular o correo electronico:</label>
-                    <input type="text" class="form-control" id="correo" name="correo">
-
-                    <label for="contraseña" class="form-label p-1">contraseña:</label>
-                    <input type="password" class="form-control" id="contraseña" name="contraseña">
-
-                  </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-outline-dark p-1 mt-5">INGRESAR</button>
-                    <p>¿Has olvidado tu contraseña?</p>
-                  </div>
-
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-google"></i>Iniciar con
-                      Google</button>
-
-                    <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-facebook"></i>Iniciar
-                      con
-                      Facebook</button>
-                  </div>
+  <!-- Modal  Para iniciar sesion o registrase-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
 
 
-                </form>
-              </div>
+          <div class="card m-5">
+            <h5 class="card-header">INICIAR SESION </h5>
+            <div class="card-body">
+              <form action="/login" method="POST">
+                <div class="form-group">
+                  <label for="correo" class="form-label p-1">Número de celular o correo electronico:</label>
+                  <input type="text" class="form-control" id="correo" name="correo">
+
+                  <label for="contraseña" class="form-label p-1">contraseña:</label>
+                  <input type="password" class="form-control" id="contraseña" name="contraseña">
+
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-outline-dark p-1 mt-5">INGRESAR</button>
+                  <p>¿Has olvidado tu contraseña?</p>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-google"></i>Iniciar con
+                    Google</button>
+
+                  <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-facebook"></i>Iniciar
+                    con
+                    Facebook</button>
+                </div>
+
+
+              </form>
             </div>
-            <a class="btn btn-outline-dark" href="/tienda/v1/formulario" role="button"><i class="bi bi-person-circle">
-                Registrar</i></a> <br> <br>
-
           </div>
+          <a class="btn btn-outline-dark" href="/tienda/v1/formulario" role="button"><i class="bi bi-person-circle">
+              Registrar</i></a> <br> <br>
+
         </div>
       </div>
     </div>
+  </div>
 
 
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -143,21 +147,24 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body" id="carritoContenido">
-     
 
     </div>
 
+    <div>
+      <div id="preciototal"></div>
+    </div>
   </div>
 
 
-    <script type="text/javascript" src="js/getFiles.js"></script>
+  <script type="text/javascript" src="js/getFiles.js"></script>
 
-  
+
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-  integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-  crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-  integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-  crossorigin="anonymous"></script> <!--lINKS SCRIPS DE BOOSTRAP-->
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script> <!--lINKS SCRIPS DE BOOSTRAP-->
 </body>
+
 </html>

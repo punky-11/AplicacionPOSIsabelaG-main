@@ -69,7 +69,7 @@
               data-bs-target="#exampleModal">
               ver producto
             </a>
-            <button onclick="agregrarProducto('<%=producto._id%>', '<%=producto.nombre%>','<%=producto.precio%>')"
+            <button onclick="agregarProducto('<%=producto._id%>', '<%=producto.nombre%>','<%=producto.precio%>')"
               class="btn btn-dark"><i class="bi bi-cart-plus"></i></button>
 
             <input type="number" id="unidades">
@@ -85,13 +85,26 @@
 
       var carroCompras = JSON.parse(localStorage.getItem('carroCompras')) || []; //estamos buscando un arreglo yque es lo que esta guardado en el local store si no hay algo le decimos que si no esta lo cree
 
-      function agregrarProducto(id, nombre, precio) {
-        // estamos creando una funcion y la convertimos en un arreglo 
-        carroCompras.push({
-          'id': id,
-          'nombre': nombre,
-          'precio': precio
-        });
+      function agregarProducto(id, nombre, precio) {
+        const repeat = carroCompras.some((productorepe) => productorepe.id === id);
+
+        if (repeat) {
+          carroCompras.map((prod) => {
+            if (prod.id === id) {
+              (prod.cantidad++);
+              cookies();
+            }
+          });
+        } else {
+          // estamos creando una funcion y la convertimos en un arreglo 
+          carroCompras.push({
+            'id': id,
+            'nombre': nombre,
+            'precio': precio,
+            'cantidad': 1
+          });
+        }
+
         // carroCompras.push(producto);// aqui le indicamos que a carro compras le vamos a agregar los atributos de productos y esto quedaria como un clave valor
         console.log(carroCompras)
 
@@ -120,11 +133,15 @@
             <div>
               <p>${elementoP.nombre}</p>
               <p>${elementoP.precio}</p>
-              <div id="opciones" class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-dash"></i></button>
-         <input type="text" class="form-control" value="1"  style="width:50px;">
-         <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-dash"></i></button>
 
+              <div  class="d-flex justify-content-around" >
+                
+                <button  class="btn btn-outline-danger mx-1" style="max-height:40px; max-width:40px;" onclick="restarProducto('${elementoP.id}')">-</button>
+              <p> cantidad: ${elementoP.cantidad} </p>
+              <button  class="btn btn-outline-success mx-1" style="max-height:40px; max-width:40px; margin-left:15px;" onclick="sumarProducto('${elementoP.id}')">+</button>
+
+                <button class="btn btn-outline-danger ms-4" style="max-height:40px; max-width:40px;" onclick="eliminarProductoC('${elementoP.id}')"><i class="bi bi-trash3"></i></button
+              
            </div>
             </div>
 
@@ -134,32 +151,61 @@
     `
           div.appendChild(detalles);
 
-          let eliminar = document.createElement('i');
-          eliminar.className = "bi bi-trash-fill";
-          detalles.appendChild(eliminar);
-          eliminar.addEventListener("click", eliminarProductoC);
+          // let eliminar = document.createElement('i');
+          // eliminar.className = "bi bi-trash-fill";
+          // detalles.appendChild(eliminar);
+          // eliminar.addEventListener("click", eliminarProductoC);
 
 
         });
-        const total =carroCompras.reduce((acc, el) => acc + parseFloat(el.precio), 0).toFixed(2);
-          const totalF= document.createElement("div");
-          totalF.className="total-content";
-          totalF.innerHTML=`total a pagar $: ${total}`;
-          div.appendChild(totalF);
+        const total = carroCompras.reduce((acc, el) => acc + parseFloat(el.precio * el.cantidad), 0).toFixed(2);
+        const totalF = document.getElementById("preciototal");
+        totalF.innerHTML = `<p>total a pagar $: ${total}</P>`;
 
 
       }
 
-      function eliminarProductoC() {
+      function eliminarProductoC(id) {
         //metodo find para buscar el id del producto para eliminar
-        const foundId = carroCompras.find((elementoP) => elementoP.id);
+        const foundId = carroCompras.find((elementoP) => elementoP.id === id);
         console.log(foundId)
 
-        carroCompras = carroCompras.filter((carritoId) => { //busco dentro del carrito y le pido que me busque todo los productos que sean diferentes al id de la linea 133 que es el producto que se desea eliminar 
+        carroCompras = carroCompras.filter((carritoId) => { //busco dentro del carrito y le pido que me busque todo los productos que sean diferentes al id de la linea 162 que es el producto que se desea eliminar 
           return carritoId !== foundId;
         })
         mostrarProducto();
         cookies();//elimina el producto de las cookies tambien
+      }
+
+
+
+      function sumarProducto(id) {
+        carroCompras.map((elemento) => {
+          if (elemento.id === id) {
+
+            elemento.cantidad++;
+
+
+            cookies();
+            mostrarProducto();
+          }
+        });
+      }
+
+      function restarProducto(id) {
+        carroCompras.map((elemento) => {
+          if (elemento.id === id) {
+
+            elemento.cantidad--;
+            if (elemento.cantidad == 0) {
+              eliminarProductoC(id)
+            };
+
+            cookies();
+            mostrarProducto();
+          }
+        });
+
       }
     </script>
 
