@@ -25,7 +25,7 @@ const SchemaCatalogo = new mongoose.Schema({
     require:true,
    },
    habilitado:{
-      type:Boolean,
+      type:String,
       require:true
      },
   

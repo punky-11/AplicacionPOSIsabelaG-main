@@ -42,3 +42,5 @@ exports.catalogo = async (req, res) => {
         'catalogo': catalogo
     })
 }
+
+

@@ -1,59 +1,15 @@
- const modelos = require('../modelos/esquemaUsuarios');
+const modelos = require('../modelos/esquemaUsuarios');
 const productos = require('../modelos/esquemaCatalogo');
 const vendedor = require('../modelos/esquemaVendedores');
 const nodemailer = require('nodemailer');
 const ImageModel = require('../modelos/esquemaImagen');
 
+const { body, validationResult } = require('express-validator');
+
 
 //PAGINA PRINCIPAL LANDING
 exports.paginaprincipal = (req, res) => {
     res.render('paginaPrincipal')
-}
-
-//TODO SOBRE UN VENDEDOR SU RESGISTRO Y VENTAS -----------------
-
-exports.formularioVendedores = (req, res) => {
-    res.render('../vistas/vendedores/formularioRegistrarVendedor')
-}
-
-exports.tablaVendedores = async (req, res) => {
-    let tablaVendedores = await vendedor.find();
-    res.render('../vistas/vendedores/tablaVendedores', {
-        "vendedores": tablaVendedores,
-    })
-}
-
-
-exports.registrarVendedor = (req, res) => {
-    const nuevoVendedor = new vendedor({
-        nombreVendedor: req.body.nombreVendedor,
-        apellidoVendedor: req.body.apellidoVendedor,
-        telefonoVendedor: req.body.telefonoVendedor,
-        ubicacionVendedor: req.body.ubicacionVendedor,
-        correoVendedor: req.body.correoVendedor,
-        documentoVendedor: req.body.documentoVendedor,
-    });
-    nuevoVendedor.save();
-    res.redirect('/tienda/v1/tablaVendedores')
-}
-//eliminar vendedor
-
-exports.eliminarVendedor = async (req, res) => {
-    let id = req.params.id
-    await vendedor.findByIdAndDelete({ "_id": id });
-    res.redirect('/tienda/v1/tablaVendedores')
-
-
-}
-
-exports.actualizarVendedor = async (req, res) =>{
-    let id= {_id: req.body.idn}
-    let actu={nombreVendedor: req.body.nombrevendedorn,
-        documentoVendedor: req.body.documentov}
-        await vendedor.findOneAndUpdate(id, actu);
-        res.redirect('/tienda/v1/tablaVendedores')
-
-        console.log(actu)
 }
 
 //-PRODUCTOS----------------------------------------------
@@ -76,19 +32,26 @@ exports.eliminarproducto = async (req, res) => {
 }//funcion para eliminar producto 
 
 exports.registrarProductos = (req, res) => {
-    const registrarProducto = new productos({
-        referencia: req.body.referencia,
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        precio: req.body.precio,
-        stock: req.body.stock,
-        habilitado: req.body.habilitado,
 
-    });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+        console.log(errors)
+    }
 
-    registrarProducto.save();
+    // const registrarProducto = new productos({
+    //     referencia: req.body.referencia,
+    //     nombre: req.body.nombre,
+    //     descripcion: req.body.descripcion,
+    //     precio: req.body.precio,
+    //     stock: req.body.stock,
+    //     habilitado: req.body.habilitado,
 
-    res.redirect('/tienda/v1/productos')
+    // });
+
+    // registrarProducto.save();
+
+    // res.redirect('/tienda/v1/productos')
 }//funcion para guardar un producto
 
 
@@ -113,20 +76,30 @@ exports.tablaUsuarios = async (req, res) => {
 };  //tabla que muestra la informacion de los clientes registrados
 
 exports.registrarUsuario = async (req, res) => {
-    const registrarUsuario = new modelos({
-        nombreUsuario: req.body.Nombre,
-        apellidoUsuario: req.body.Apellido,
-        telefonoUsuario: req.body.Telefono,
-        documentoUsuario: req.body.Documento,
-        ubicacionUsuario: req.body.Dirección,
-        correoElectronicoUsuario: req.body.correo,
-        contraseñaUsuario: req.body.contraseña,
-    });
-    registrarUsuario.save();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(req.body)
+        const valores = req.body
+        const validaciones = errors.array()
+        res.render('../vistas/usuarios/formularioRegistrar', { validaciones: validaciones, valores: valores })
+    }
+    else {
 
-    res.redirect('/tienda/v1/tablaUsuarios')
+        const registrarUsuario = new modelos({
+            nombreUsuario: req.body.Nombre,
+            apellidoUsuario: req.body.Apellido,
+            telefonoUsuario: req.body.Telefono,
+            documentoUsuario: req.body.Documento,
+            ubicacionUsuario: req.body.Dirección,
+            correoElectronicoUsuario: req.body.correo,
+            contraseñaUsuario: req.body.contraseña,
+        });
+        registrarUsuario.save();
 
-    console.log(req.body)
+        res.redirect('/tienda/v1/inicio')
+
+        console.log(req.body)
+    }
 } //funcion para que los datos del ususario sean guardados en ka base de datos y luego los muestre en la respectiva tabla para verlos
 
 
@@ -155,28 +128,64 @@ exports.eliminarusuario = async (req, res) => {
 
 //   }
 
-  exports.actualizarusuario = async (req, res) => {
-    console.log(req.body.idnuevo )
-      const id = { _id: req.body.idnuevo };
-      const actu = {
-         nombreUsuario: req.body.nombreUsuario,
-          apellidoUsuario: req.body.apellidoUsuario,
-          telefonoUsuario: req.body.telefonoUsuario,
-          documentoUsuario: req.body.documentoUsuario,
-          ubicacionUsuario: req.body.ubicacionUsuario,
-          correoElectronicoUsuario: req.body.correoElectronicoUsuario,
-     }
-     console.log(actu)
-     await modelos.findOneAndUpdate(id, actu)
-     res.redirect('/tienda/v1/tablaUsuarios')
-    
- }
+exports.actualizarusuario = async (req, res) => {
+    console.log(req.body.idnuevo)
+    const id = { _id: req.body.idnuevo };
+    const actu = {
+        nombreUsuario: req.body.nombreUsuario,
+        apellidoUsuario: req.body.apellidoUsuario,
+        telefonoUsuario: req.body.telefonoUsuario,
+        documentoUsuario: req.body.documentoUsuario,
+        ubicacionUsuario: req.body.ubicacionUsuario,
+        correoElectronicoUsuario: req.body.correoElectronicoUsuario,
+    }
+    console.log(actu)
+    await modelos.findOneAndUpdate(id, actu)
+    res.redirect('/tienda/v1/tablaUsuarios')
+
+}
 //--------------------------
 
 //--USUARIO INICIAR SESION--------------
 exports.iniciarsesion = (req, res) => {
     res.render('../vistas/usuarios/iniciarsesion')
 }
+
+// exports.validacionesn=[
+//     body('_id') 
+//     .isLength({min:1})
+//     .withMessage('_id invalido')
+//     ,
+//     body('contraseña')
+//     .isLength({min:5})
+//     .withMessage('contraseña invalida'),
+
+//   async (req , res)=>{
+
+//    const errors = validationResult(req)
+
+//       if (!errors.isEmpty()) {
+//           console.log(req.body)
+//           const valores = req.body
+//           const validaciones = errors.array()
+//           res.render('ingresar', {validaciones:validaciones, valores: valores})
+//       }
+
+
+//       const id=req.body._id;
+//       const contraseña= req.body.contraseña;
+
+//     const usuarioingresa =await  usuario.findOne({_id:id});
+//   console.log(usuarioingresa);
+//       if(usuarioingresa.contraseña==contraseña && usuarioingresa.id==id){
+//         console.log(id);
+//        // res.status(200).send('perfil');
+//         //res.render('perfil/${_id}' )
+//         res.redirect(`perfil/:${id}`)
+//       }
+
+//     }
+//   ]
 
 
 //---------PAGINA DE VENTAS-----------------
@@ -187,7 +196,7 @@ exports.ventas = (req, res) => {
 
 //----OTROS-----------
 
-exports.otros=(req,res)=>{
+exports.otros = (req, res) => {
     res.render('otros')
 }
 
