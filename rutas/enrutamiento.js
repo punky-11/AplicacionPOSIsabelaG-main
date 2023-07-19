@@ -47,6 +47,8 @@ body('habilitado', 'ingresa si esta habilitado').exists().isLength({min:1, max:3
 ], rutasCRUD.registrarProductos); //link para llamar a la funcion de registrar producto en el formulario y funcione
 
 router.get('/eliminarP/:id', rutasCRUD.eliminarproducto); //eliminar producto
+router.post('/actualizarproducto', rutasCRUD.actualizarProducto);
+
 
 //PARTE DE VENDEDORES
 

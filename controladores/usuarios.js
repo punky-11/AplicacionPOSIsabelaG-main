@@ -38,22 +38,41 @@ exports.registrarProductos = (req, res) => {
         res.status(400).json({ errors: errors.array() });
         console.log(errors)
     }
+    else{
 
-    // const registrarProducto = new productos({
-    //     referencia: req.body.referencia,
-    //     nombre: req.body.nombre,
-    //     descripcion: req.body.descripcion,
-    //     precio: req.body.precio,
-    //     stock: req.body.stock,
-    //     habilitado: req.body.habilitado,
+    const registrarProducto = new productos({
+        referencia: req.body.referencia,
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        precio: req.body.precio,
+        stock: req.body.stock,
+        habilitado: req.body.habilitado,
 
-    // });
+    });
 
-    // registrarProducto.save();
+    registrarProducto.save();
 
-    // res.redirect('/tienda/v1/productos')
+    res.redirect('/tienda/v1/productos')
+}
 }//funcion para guardar un producto
 
+//funcion para actualizar un producto
+exports.actualizarProducto = async (req, res) => {
+    console.log(req.body.idnuevop)
+    const id = { _id: req.body.idnuevop };
+    const actu = {
+        referencia: req.body.referencia,
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        precio: req.body.precio,
+        stock: req.body.stock,
+        habilitado: req.body.habilitado,
+    }
+    console.log(actu)
+    await productos.findOneAndUpdate(id, actu)
+    res.redirect('/tienda/v1/productos')
+
+}
 
 // funcion para mostrar el catalogo
 exports.catalogo = async (req, res) => {
