@@ -33,6 +33,11 @@ body('contraseña', 'Ingresa una contraseña segura').exists().isLength({min:1, 
 router.get('/eliminarU/:id', rutasCRUD.eliminarusuario);//eliminar usuario
 router.post('/actualizarusuario', rutasCRUD.actualizarusuario);
 
+router.post('/autenticar',[
+    body('correoElectronicoUsuario','ingrese un correo').exists().isLength({min:1, max:100}),
+    body('contraseñaUsuario', 'ingrese contraseña').exists().isLength({min:1, max:100})
+],rutasCRUD.autenticar);
+
 //PARTE CATALOGO Y REGISTRO PRODUCTOS
 router.get('/productos', rutasCRUD.paginaProductos);// ruta para mostrar el formulario y registrar un producto y al mismo tiempo muestra la tabla y todos los datos
 

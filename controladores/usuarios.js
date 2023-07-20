@@ -38,22 +38,22 @@ exports.registrarProductos = (req, res) => {
         res.status(400).json({ errors: errors.array() });
         console.log(errors)
     }
-    else{
+    else {
 
-    const registrarProducto = new productos({
-        referencia: req.body.referencia,
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        precio: req.body.precio,
-        stock: req.body.stock,
-        habilitado: req.body.habilitado,
+        const registrarProducto = new productos({
+            referencia: req.body.referencia,
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            precio: req.body.precio,
+            stock: req.body.stock,
+            habilitado: req.body.habilitado,
 
-    });
+        });
 
-    registrarProducto.save();
+        registrarProducto.save();
 
-    res.redirect('/tienda/v1/productos')
-}
+        res.redirect('/tienda/v1/productos')
+    }
 }//funcion para guardar un producto
 
 //funcion para actualizar un producto
@@ -130,22 +130,6 @@ exports.eliminarusuario = async (req, res) => {
 
 }//funcion para eliminar usuario 
 
-//actualizar usuario
-
-//   exports.actualizarusuario= async(req, res)=>{
-//     await modelos.findByIdAndUpdate(req.params._id,{
-//       nombreUsuario: req.body.nombreUsuario,
-//       apellidoUsuario: req.body.apellidoUsuario,
-//       telefonoUsuario: req.body.telefonoUsuario,
-//       documentoUsuario: req.body.documentoUsuario,
-//       ubicacionUsuario: req.body.ubicacionUsuario,
-//      correoElectronicoUsuario: req.body.correoElectronicoUsuario,
-//     });
-
-//     console.log(req.body)
-//     res.redirect('/tienda/v1/tablaUsuarios')
-
-//   }
 
 exports.actualizarusuario = async (req, res) => {
     console.log(req.body.idnuevo)
@@ -169,6 +153,38 @@ exports.actualizarusuario = async (req, res) => {
 exports.iniciarsesion = (req, res) => {
     res.render('../vistas/usuarios/iniciarsesion')
 }
+
+
+exports.autenticar = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(req.body)
+        const valores = req.body
+        const validaciones = errors.array()
+        res.render('../vistas/paginaPrincipal', { validaciones: validaciones, valores: valores })
+    }
+    else {
+        const correo = req.body.correoElectronicoUsuario
+        const contraseña = req.body.contraseñaUsuario
+
+        const comprobando = await modelos.findOne({ 'correoElectronicoUsuario': correo })
+        console.log(comprobando)
+        if (comprobando.contraseñaUsuario === contraseña) {
+            res.send('welcome')
+        }
+        res.send('pa fuera, pa la calle ')
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 // exports.validacionesn=[
 //     body('_id') 

@@ -95,15 +95,15 @@
 <div class="card m-5">
     <h5 class="card-header">INICIAR SESION </h5>
     <div class="card-body">
-        <form action="/login" method="POST">
+        <form action="autenticar" method="POST">
             <div class="form-group">
                 <label for="correo" class="form-label p-1">Número de celular o correo electronico:</label>
-                <input  id="_id" name="_id" type="text" autocomplete="_id"  
-            value="<% if(typeof valores != 'undefined') { %><%= valores._id %><%}%>">
+                <input  id="correoElectronicoUsuario" name="correoElectronicoUsuario" type="text"  
+            value="<% if(typeof valores != 'undefined') { %><%= valores.correoElectronicoUsuario %><%}%>">
 
                 <label for="contraseña" class="form-label p-1">contraseña:</label>
-                <input  id="contraseña" name="contraseña" type="text" autocomplete="contraseña"  
-            value="<% if(typeof valores != 'undefined') { %><%= valores.contraseña %><%}%>">
+                <input  id="contraseñaUsuario" name="contraseñaUsuario" type="text" 
+            value="<% if(typeof valores != 'undefined') { %><%= valores.contraseñaUsuario %><%}%>">
 
             </div>
             <div class="form-group">
@@ -119,7 +119,23 @@
 
 
         </form>
+        <div>
+          <% if(typeof validaciones !='undefined' ){%>
+            <% validaciones.forEach((validacion)=>{%>
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>
+                  <%= validacion.msg %>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+    
+    
+    
+    
+              <%})}%>
+        </div>
     </div>
+ 
   </div>
 
 
