@@ -39,8 +39,8 @@ exports.eliminarVendedor = async (req, res) => {
 exports.actualizarVendedor = async (req, res) => {
     let id = { _id: req.body.idn }
     let actu = {
-        nombreVendedor: req.body.nombrevendedorn,
-        documentoVendedor: req.body.documentov
+        nombreVendedor: req.body.nombreVendedor,
+        documentoVendedor: req.body.documentoVendedor
     }
     await vendedor.findOneAndUpdate(id, actu);
     res.redirect('/tienda/v1/tablaVendedores')

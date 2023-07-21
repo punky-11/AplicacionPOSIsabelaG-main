@@ -9,7 +9,8 @@ const router = express.Router();
 
 router.get('/inicio',rutasCRUD.paginaprincipal); // ruta para mostrar el landing
 
-
+//administradores
+router.get('/administradores', rutasCRUD.administadores)
 
 //PARTE USUARIOS
 router.get('/iniciarsesion', rutasCRUD.iniciarsesion); // ruta para formuolario inicio de sesion

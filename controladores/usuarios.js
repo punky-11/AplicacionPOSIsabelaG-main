@@ -6,11 +6,15 @@ const ImageModel = require('../modelos/esquemaImagen');
 
 const { body, validationResult } = require('express-validator');
 
-
+//ADMINISTRADORES
+exports.administadores=(req, res)=>{
+    res.render('administrador')
+}
 //PAGINA PRINCIPAL LANDING
 exports.paginaprincipal = (req, res) => {
     res.render('paginaPrincipal')
 }
+
 
 //-PRODUCTOS----------------------------------------------
 
@@ -158,10 +162,8 @@ exports.iniciarsesion = (req, res) => {
 exports.autenticar = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(req.body)
-        const valores = req.body
-        const validaciones = errors.array()
-        res.render('../vistas/paginaPrincipal', { validaciones: validaciones, valores: valores })
+        res.status(400).json({ errors: errors.array() });
+        console.log(errors)
     }
     else {
         const correo = req.body.correoElectronicoUsuario
@@ -225,7 +227,7 @@ exports.autenticar = async (req, res) => {
 
 //---------PAGINA DE VENTAS-----------------
 exports.ventas = (req, res) => {
-    res.render('paginaDeVentas')
+    res.render('../vistas/vendedores/paginaDeVentas')
 }
 
 

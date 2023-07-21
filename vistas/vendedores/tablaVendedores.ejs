@@ -4,9 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <title>Registro ventas vendedores</title>
 </head>
 <style>
@@ -17,47 +22,69 @@
 
 <body>
 
-    <div>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Documento</th>
-                    <th scope="col">Ventas despachadas</th>
+    <br>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+    <div class="container">
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                Tabla
+            </div>
+            <div class="card-body">
+                <table id="table_id" class="display table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Telefono</th>
+                            <th>Documento</th>
+                            
 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%vendedores.forEach(function(elementoVendedor){%>  
+                            <tr>
+                                
+                                <td>
+                                    <%=elementoVendedor.nombreVendedor%>
+                                </td>
+        
+                                <td>
+                                    <%=elementoVendedor.documentoVendedor%>
+                                </td>
+        
+                                <td>
+                                    <!--AQUI VAMOS A LLAMAR -->
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-outline-success" role="button"  data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"onclick="rellenar(`<%=elementoVendedor._id%>`,`<%=elementoVendedor.nombreVendedor%>`,`<%=elementoVendedor.documentoVendedor%>`)"> 
+                                        Actualizar
+                                    </a>
+        
+                                    <a href="eliminarV/<%= elementoVendedor._id %>" class="btn btn-outline-danger"role="button">Eliminar</a>
+        
+        
+                                </td>
+                            </tr>
+                        <%})%>
 
-
-                </tr>
-            </thead> <!--FALTA CREAR FOR ECH PARA ENVIAR LOS DATOS-->
-            <tbody>
-                <%vendedores.forEach(function(elementoVendedor){%>  
-                    <tr>
-                        
-                        <td>
-                            <%=elementoVendedor.nombreVendedor%>
-                        </td>
-
-                        <td>
-                            <%=elementoVendedor.documentoVendedor%>
-                        </td>
-
-                        <td>
-                            <!--AQUI VAMOS A LLAMAR -->
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-outline-success" role="button"  data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"onclick="rellenar(`<%=elementoVendedor.nombreVendedor%>`,`<%=elementoVendedor.documentoVendedor%>`)"> 
-                                Actualizar
-                            </a>
-
-                            <a href="eliminarV/<%= elementoVendedor._id %>" class="btn btn-outline-danger"role="button">Eliminar</a>
-
-
-                        </td>
-                    </tr>
-                <%})%>
-            </tbody>
-        </table>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Telefono</th>
+                            <th>Documento</th>
+                           
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 
 
@@ -96,12 +123,14 @@
                     <form action="actualizarV" method="POST">
                         <div class="form-group">
                            
+                            <label for="idn" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="idn" name="idn">
 
-                            <label for="nombrevendedorn" class="form-label p-1">NOMBRE:</label>
-                            <input type="text" class="form-control" id="nombrevendedorn" name="nombrevendedorn">
+                            <label for="nombreVendedor" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="nombreVendedor" name="nombreVendedor">
 
-                            <label for="documentov" class="form-label p-1">DOCUMENTO:</label>
-                            <input type="text" class="form-control" id="documentov" name="documentov">
+                            <label for="documentoVendedor" class="form-label p-1">DOCUMENTO:</label>
+                            <input type="text" class="form-control" id="documentoVendedor" name="documentoVendedor">
 
                             <label for="ventasd" class="form-label p-1">Ventas despachadas</label>
                             <input type="text" class="form-control" id="ventasd" name="ventasd">
@@ -116,20 +145,19 @@
 
 
 <script>
-    function rellenar(a,b ){
-        nombrevendedorn.value=a
-        documentov.value=b
+    function rellenar(idn,a,b ){
+        idn=idn
+        nombreVendedor.value=a
+        documentoVendedor.value=b
     }
 </script>
    
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
                 crossorigin="anonymous"></script>
-
-
-
-
 
 </body>
 
