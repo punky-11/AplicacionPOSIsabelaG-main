@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8"
     src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    <title>Registro ventas vendedores</title>
+    <title>vendedores</title>
 </head>
 <style>
     div {
@@ -31,7 +31,7 @@
     <div class="container">
         <div class="card border-primary mb-3">
             <div class="card-header">
-                Tabla
+                VENDEDORES
             </div>
             <div class="card-body">
                 <table id="table_id" class="display table table-bordered" style="width:100%">
@@ -40,7 +40,13 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Telefono</th>
+                            <th>ubicacion</th>
+                            <th>E-mail</th>
                             <th>Documento</th>
+                            <th>Ventas</th>
+                            <th>Opciones</th>
+
+
                             
 
                         </tr>
@@ -52,19 +58,49 @@
                                 <td>
                                     <%=elementoVendedor.nombreVendedor%>
                                 </td>
+
+
+                                <td>
+                                    <%=elementoVendedor.apellidoVendedor%>
+                                </td>
+
+
+                                <td>
+                                    <%=elementoVendedor.telefonoVendedor%>
+                                </td>
+
+
+                                <td>
+                                    <%=elementoVendedor.ubicacionVendedor%>
+                                </td>
+
+
+                                <td>
+                                    <%=elementoVendedor.correoVendedor%>
+                                </td>
         
                                 <td>
                                     <%=elementoVendedor.documentoVendedor%>
                                 </td>
+
+
+                                <td>
+                                    <%=elementoVendedor.ventasdespachadas%>
+                                </td>
         
                                 <td>
-                                    <!--AQUI VAMOS A LLAMAR -->
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-outline-success" role="button"  data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"onclick="rellenar(`<%=elementoVendedor._id%>`,`<%=elementoVendedor.nombreVendedor%>`,`<%=elementoVendedor.documentoVendedor%>`)"> 
-                                        Actualizar
-                                    </a>
+                                    <button class="btn btn-outline-success" role="button" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    onclick="rellenar(`<%=elementoVendedor._id%>`,
+                                    `<%=elementoVendedor.nombreVendedor%>`,
+                                    `<%=elementoVendedor.apellidoVendedor%>`,
+                                    `<%=elementoVendedor.telefonoVendedor%>`,
+                                    `<%=elementoVendedor.ubicacionVendedor%>`,
+                                    `<%=elementoVendedor.correoVendedor%>`,
+                                    `<%=elementoVendedor.documentoVendedor%>`,
+                                    `<%=elementoVendedor.ventasdespachadas%>`)">
+                                    Actualizar
+                                </button>
         
                                     <a href="eliminarV/<%= elementoVendedor._id %>" class="btn btn-outline-danger"role="button">Eliminar</a>
         
@@ -79,7 +115,12 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Telefono</th>
+                            <th>ubicacion</th>
+                            <th>E-mail</th>
                             <th>Documento</th>
+                            <th>Ventas</th>
+                            <th>Opciones</th>
+
                            
                     </tfoot>
                 </table>
@@ -123,20 +164,33 @@
                     <form action="actualizarV" method="POST">
                         <div class="form-group">
                            
-                            <label for="idn" class="form-label p-1">NOMBRE:</label>
-                            <input type="text" class="form-control" id="idn" name="idn">
+                            <label for="idnuevo" class="form-label p-1">id:</label>
+                            <input type="text" class="form-control" id="idnuevo" name="idnuevo" readonly>
 
                             <label for="nombreVendedor" class="form-label p-1">NOMBRE:</label>
                             <input type="text" class="form-control" id="nombreVendedor" name="nombreVendedor">
 
+                            <label for="apellidoVendedor" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="apellidoVendedor" name="apellidoVendedor">
+
+                            <label for="telefonoVendedor" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="telefonoVendedor" name="telefonoVendedor">
+
+                            <label for="ubicacionVendedor" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="ubicacionVendedor" name="ubicacionVendedor">
+
+                            <label for="correoVendedor" class="form-label p-1">NOMBRE:</label>
+                            <input type="text" class="form-control" id="correoVendedor" name="correoVendedor">
+
+
                             <label for="documentoVendedor" class="form-label p-1">DOCUMENTO:</label>
                             <input type="text" class="form-control" id="documentoVendedor" name="documentoVendedor">
 
-                            <label for="ventasd" class="form-label p-1">Ventas despachadas</label>
-                            <input type="text" class="form-control" id="ventasd" name="ventasd">
+                            <label for="ventasdespachadas" class="form-label p-1">Ventas despachadas</label>
+                            <input type="text" class="form-control" id="ventasdespachadas" name="ventasdespachadas">
 
                             <div class="modal-footer">
-                                <input type="submit" class="btn btn-primary" value="Actualizar">
+                                <input type="submit" value="Actualizar">
                             </div>
                         </div>
                     </form>
@@ -145,10 +199,15 @@
 
 
 <script>
-    function rellenar(idn,a,b ){
-        idn=idn
-        nombreVendedor.value=a
-        documentoVendedor.value=b
+    function rellenar(idn,n,a,t,u,c,d,v){
+        idnuevo.value=idn
+        nombreVendedor.value=n
+        apellidoVendedor.value=a
+        telefonoVendedor.value=t
+        ubicacionVendedor.value=u
+        correoVendedor.value=c
+        documentoVendedor.value=d
+        ventasdespachadas.value=v
     }
 </script>
    

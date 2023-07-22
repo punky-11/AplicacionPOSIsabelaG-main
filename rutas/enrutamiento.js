@@ -8,7 +8,8 @@ const express =require('express');
 const router = express.Router();
 
 router.get('/inicio',rutasCRUD.paginaprincipal); // ruta para mostrar el landing
-
+ //navbar 2
+ router.get('/navbar2',rutasCRUD.navbar2)
 //administradores
 router.get('/administradores', rutasCRUD.administadores)
 
@@ -64,7 +65,7 @@ router.get('/tablaVendedores', rutasVendedor.tablaVendedores); // ruta para ver 
 
 router.post('/registrarVendedor', rutasVendedor.registrarVendedor);
 router.get('/eliminarV/:id', rutasVendedor.eliminarVendedor);//eliminar vendedor
-router.post('/actualizarV', rutasVendedor.actualizarVendedor);
+router.post('/actualizarV', rutasVendedor.actualizarV);
 
 
 //PAGINA DE VENTAS

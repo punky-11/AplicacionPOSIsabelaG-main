@@ -15,7 +15,6 @@ const Schemavendedores = new mongoose.Schema({
     telefonoVendedor:{
         type:String,
         require:true,
-        unique:true,
     },
     ubicacionVendedor:{
         type:String,
@@ -27,7 +26,6 @@ const Schemavendedores = new mongoose.Schema({
     },
     documentoVendedor:{
         type:String,
-        unique:true,
         require:true,
     },
     ventasdespachadas:{

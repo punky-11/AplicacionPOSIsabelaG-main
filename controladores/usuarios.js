@@ -10,6 +10,10 @@ const { body, validationResult } = require('express-validator');
 exports.administadores=(req, res)=>{
     res.render('administrador')
 }
+//NAVBAR 2
+exports.navbar2=(req,res)=>{
+    res.render('../vistas/parciales/navbar2')
+}
 //PAGINA PRINCIPAL LANDING
 exports.paginaprincipal = (req, res) => {
     res.render('paginaPrincipal')
@@ -33,7 +37,7 @@ exports.eliminarproducto = async (req, res) => {
 
     res.redirect('/tienda/v1/productos')
 
-}//funcion para eliminar producto 
+}//funcion para eliminar producto
 
 exports.registrarProductos = (req, res) => {
 
@@ -72,7 +76,6 @@ exports.actualizarProducto = async (req, res) => {
         stock: req.body.stock,
         habilitado: req.body.habilitado,
     }
-    console.log(actu)
     await productos.findOneAndUpdate(id, actu)
     res.redirect('/tienda/v1/productos')
 
@@ -132,7 +135,7 @@ exports.eliminarusuario = async (req, res) => {
 
     res.redirect('/tienda/v1/tablaUsuarios')
 
-}//funcion para eliminar usuario 
+}//funcion para eliminar usuario
 
 
 exports.actualizarusuario = async (req, res) => {
@@ -161,21 +164,21 @@ exports.iniciarsesion = (req, res) => {
 
 exports.autenticar = async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
-        console.log(errors)
-    }
-    else {
+    // if (!errors.isEmpty()) {
+    //     res.status(400).json({ errors: errors.array() });
+    //     console.log(errors)
+    // }
+    // else {
         const correo = req.body.correoElectronicoUsuario
         const contraseña = req.body.contraseñaUsuario
 
         const comprobando = await modelos.findOne({ 'correoElectronicoUsuario': correo })
         console.log(comprobando)
-        if (comprobando.contraseñaUsuario === contraseña) {
-            res.send('welcome')
+        if (comprobando.contraseñaUsuario === contraseña  ) {
+            res.render('../vistas/parciales/navbar2')
         }
         res.send('pa fuera, pa la calle ')
-    }
+    
 }
 
 
@@ -189,7 +192,7 @@ exports.autenticar = async (req, res) => {
 
 
 // exports.validacionesn=[
-//     body('_id') 
+//     body('_id')
 //     .isLength({min:1})
 //     .withMessage('_id invalido')
 //     ,
@@ -290,9 +293,9 @@ exports.descargarExcel = async (req, res) => {
 
     //creamos un nuevo documento
     const wb = new xl.Workbook();
-    //definimos el nombre con el cual se descargara el archivo 
+    //definimos el nombre con el cual se descargara el archivo
     const nombreArchivo = 'TablaProductos';
-    //se define el nombre 
+    //se define el nombre
     var ws = wb.addWorksheet(nombreArchivo);
 
     //definimos estilos
@@ -322,10 +325,10 @@ exports.descargarExcel = async (req, res) => {
     //llamamos a la base de datos
     const listaProductos = await productos.find()
 
-    // definimos un contador que empiece en 2 
+    // definimos un contador que empiece en 2
     let fila = 2;
 
-    //agregamos el contenido de la base de datos con un for o un forEach para llamar todos los datos 
+    //agregamos el contenido de la base de datos con un for o un forEach para llamar todos los datos
 
     listaProductos.forEach(datoProducto => {
         ws.cell(fila, 1).string(datoProducto.referencia).style(contenidoEstilo);
@@ -338,13 +341,13 @@ exports.descargarExcel = async (req, res) => {
 
     const rutaExcel = path.join(__dirname, 'excel' + nombreArchivo + '.xlsx');
 
-    //escribir y guardar en el documento 
-    //se le inclulle la ruta y una funcion 
+    //escribir y guardar en el documento
+    //se le inclulle la ruta y una funcion
     wb.write(rutaExcel, function (err, stars) {
 
         //capturamos y mostramos en caso de un error
         if (err) console.log(err);
-        //creamos una funcion que descargue el archibo y lo elimine 
+        //creamos una funcion que descargue el archibo y lo elimine
         else {
 
             //guardamos el documento en la carpeta para excel para poder descargarla en el pc

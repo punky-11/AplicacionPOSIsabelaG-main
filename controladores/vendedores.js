@@ -36,11 +36,17 @@ exports.eliminarVendedor = async (req, res) => {
 
 }
 
-exports.actualizarVendedor = async (req, res) => {
-    let id = { _id: req.body.idn }
+exports.actualizarV = async (req, res) => {
+
+    let id = { _id: req.body.idnuevo }
     let actu = {
         nombreVendedor: req.body.nombreVendedor,
-        documentoVendedor: req.body.documentoVendedor
+        apellidoVendedor: req.body.apellidoVendedor,
+        telefonoVendedor: req.body.telefonoVendedor,
+        ubicacionVendedor:req.body.ubicacionVendedor,
+        correoVendedor:req.body.correoVendedor,
+        documentoVendedor: req.body.documentoVendedor,
+        ventasdespachadas: req.body.ventasdespachadas,
     }
     await vendedor.findOneAndUpdate(id, actu);
     res.redirect('/tienda/v1/tablaVendedores')
