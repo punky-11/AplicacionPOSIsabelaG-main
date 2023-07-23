@@ -14,7 +14,7 @@ router.get('/inicio',rutasCRUD.paginaprincipal); // ruta para mostrar el landing
 router.get('/administradores', rutasCRUD.administadores)
 
 //PARTE USUARIOS
-router.get('/iniciarsesion', rutasCRUD.iniciarsesion); // ruta para formuolario inicio de sesion
+router.get('/iniciarsesion',rutasCRUD.iniciarsesion); // ruta para formuolario inicio de sesion
 
 
 router.get('/formulario', rutasCRUD.formularioRegistro); // ruta para mostrar el formulario de resgistro nuevo usuario
@@ -37,7 +37,7 @@ router.post('/actualizarusuario', rutasCRUD.actualizarusuario);
 
 router.post('/autenticar',[
     body('correoElectronicoUsuario','ingrese un correo').exists().isLength({min:1, max:100}),
-    body('contraseñaUsuario', 'ingrese contraseña').exists().isLength({min:1, max:100})
+    body('contraseñaUsuario', 'ingrese una contraseña').exists().isLength({min:1, max:100})
 ],rutasCRUD.autenticar);
 
 //PARTE CATALOGO Y REGISTRO PRODUCTOS

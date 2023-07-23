@@ -7,11 +7,12 @@ const ImageModel = require('../modelos/esquemaImagen');
 const { body, validationResult } = require('express-validator');
 
 //ADMINISTRADORES
-exports.administadores=(req, res)=>{
+exports.administadores = (req, res) => {
     res.render('administrador')
 }
 //NAVBAR 2
-exports.navbar2=(req,res)=>{
+exports.navbar2 = (req, res) => {
+
     res.render('../vistas/parciales/navbar2')
 }
 //PAGINA PRINCIPAL LANDING
@@ -164,21 +165,25 @@ exports.iniciarsesion = (req, res) => {
 
 exports.autenticar = async (req, res) => {
     const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     res.status(400).json({ errors: errors.array() });
-    //     console.log(errors)
-    // }
-    // else {
+    if (!errors.isEmpty()) {
+        const valoresInicio = req.body
+        const validacionesInicio = errors.array()
+        res.render('../vistas/usuarios/iniciarsesion', { validacionesInicio: validacionesInicio, valoresInicio: valoresInicio })
+
+    }
+    else {
         const correo = req.body.correoElectronicoUsuario
         const contraseña = req.body.contraseñaUsuario
-
         const comprobando = await modelos.findOne({ 'correoElectronicoUsuario': correo })
-        console.log(comprobando)
-        if (comprobando.contraseñaUsuario === contraseña  ) {
+        if (comprobando.contraseñaUsuario === contraseña) {
             res.render('../vistas/parciales/navbar2')
         }
-        res.send('pa fuera, pa la calle ')
-    
+        else{
+        res.send('ingresa la contraseña')
+
+
+        }
+    }
 }
 
 

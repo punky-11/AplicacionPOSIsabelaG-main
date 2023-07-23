@@ -22,123 +22,51 @@
 <body>
 
 
-
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/tienda/v1/inicio">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Mujeres</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Hombres</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Niños</a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Catalogo
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Ropa</a></li>
-              <li><a class="dropdown-item" href="#">Accesorios</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-            </ul>
-          </li>
-         
-        </ul>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-person-circle"></i>
-</button>
-      </div>
-    </div>
-  </nav>
-
-
-
-
-<!-- Modal  Para iniciar sesion o registrase-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <a class="btn btn-outline-dark" href="/tienda/v1/formulario" role="button"><i class="bi bi-person-circle"> Registrar</i></a> <br> <br>
-        <a class="btn btn-outline-dark" href="#" role="button"><i class="bi bi-box-arrow-in-right"> Iniciar sesion</i></a>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!--FORMULARIO Iniciar seion-->
 
 
-
 <div class="card m-5">
-    <h5 class="card-header">INICIAR SESION </h5>
-    <div class="card-body">
-        <form action="autenticar" method="POST">
-            <div class="form-group">
-                <label for="correo" class="form-label p-1">Número de celular o correo electronico:</label>
-                <input  id="correoElectronicoUsuario" name="correoElectronicoUsuario" type="text"  
-            value="<% if(typeof valores != 'undefined') { %><%= valores.correoElectronicoUsuario %><%}%>">
+  <h5 class="card-header">INICIAR SESION </h5>
+  <div class="card-body">
+    <form action="autenticar" method="POST">
+      <div class="form-group">
+        <label for="correoElectronicoUsuario" class="form-label p-1">Número de celular o correo electronico:</label>
+        <input type="text" class="form-control" id="correoElectronicoUsuario" name="correoElectronicoUsuario" value="<% if(typeof valoresInicio != 'undefined') { %><%= valoresInicio.Nombre %><%}%>">
+        
+        <label for="contraseñaUsuario" class="form-label p-1">contraseña:</label>
+        <input type="password" class="form-control" id="contraseñaUsuario" name="contraseñaUsuario" value="<% if(typeof valoresInicio != 'undefined') { %><%= valoresInicio.Nombre %><%}%>">
 
-                <label for="contraseña" class="form-label p-1">contraseña:</label>
-                <input  id="contraseñaUsuario" name="contraseñaUsuario" type="text" 
-            value="<% if(typeof valores != 'undefined') { %><%= valores.contraseñaUsuario %><%}%>">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-outline-dark p-1 mt-5">INGRESAR</button>
+        <p>¿Has olvidado tu contraseña?</p>
+      </div>
 
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-outline-dark p-1 mt-5">INGRESAR</button>
-                <p>¿Has olvidado tu contraseña?</p>
-            </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-google"></i></button>
 
-           
-
-            <div class="form-group">
-                <button type="submit"  class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-google"></i></button>
-            
-                <button type="submit"  class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-facebook"></i></button>
-            </div>
+        <button type="submit" class="btn btn-outline-dark p-1 mt-5"><i class="bi bi-facebook"></i></button>
+      </div>
 
 
-        </form>
-        <div>
-          <% if(typeof validaciones !='undefined' ){%>
-            <% validaciones.forEach((validacion)=>{%>
-              <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>
-                  <%= validacion.msg %>
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-    
-    
-    
-    
-              <%})}%>
-        </div>
-    </div>
- 
+    </form>
   </div>
+  <div>
+    <% if(typeof validacionesInicio !='undefined' ){%>
+      <% validacionesInicio.forEach((validacionesInicio)=>{%>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>
+            <%= validacionesInicio.msg %>
+          </strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+
+
+
+        <%})}%>
+  </div>
+</div>
 
 
 

@@ -108,10 +108,10 @@
               <form action="autenticar" method="POST">
                 <div class="form-group">
                   <label for="correoElectronicoUsuario" class="form-label p-1">Número de celular o correo electronico:</label>
-                  <input type="text" class="form-control" id="correoElectronicoUsuario" name="correoElectronicoUsuario">
+                  <input type="text" class="form-control" id="correoElectronicoUsuario" name="correoElectronicoUsuario" value="<% if(typeof valoresInicio != 'undefined') { %><%= valoresInicio.contraseña %><%}%>">
 
                   <label for="contraseñaUsuario" class="form-label p-1">contraseña:</label>
-                  <input type="password" class="form-control" id="contraseñaUsuario" name="contraseñaUsuario">
+                  <input type="password" class="form-control" id="contraseñaUsuario" name="contraseñaUsuario" value="<% if(typeof valoresInicio != 'undefined') { %><%= valoresInicio.contraseña %><%}%>">
 
                 </div>
                 <div class="form-group">
@@ -127,6 +127,21 @@
 
 
               </form>
+            </div>
+            <div>
+              <% if(typeof validacionesInicio !='undefined' ){%>
+                <% validacionesInicio.forEach((validacion)=>{%>
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>
+                      <%= validacionesInicio.msg %>
+                    </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+        
+        
+        
+        
+                  <%})}%>
             </div>
           </div>
           <a class="btn btn-outline-dark" href="/tienda/v1/formulario" role="button"><i class="bi bi-person-circle">
